@@ -2,8 +2,8 @@ global.App =
    root: __dirname
    port: process.env.PORT || 8080
 
-World        = require("game").World
-EventManager = require("event_manager").EventManager
+World        = require("./lib/game").World
+EventManager = require("./lib/event_manager").EventManager
 http         = require "http"
 static       = require "node-static"
 socketIO     = require "socket.io"
