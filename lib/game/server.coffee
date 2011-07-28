@@ -25,13 +25,21 @@ class Client
          @server.broadcast "#{@username} has entered the zone."
          return
       
-      @server.broadcast "#{@username}: #{message}"
+      if message.indexOf("/say ") is 0
+         words = message.split(/\s+/)
+         user = words[1]
+         message = words[2..-1].join(" ")
+
+         @server.pm user, "#{@username} says: #{message}"
+      else
+         @server.broadcast "#{@username}: #{message}"
 
    processDisconnect: ->
       @server.broadcast "#{@username} has left the zone."
 
 class Server
    constructor: ->
+      @clients = []
       @port = App.port
 
       @static_server = new static.Server(path.join App.root, "static")
@@ -49,10 +57,23 @@ class Server
          @socket_server.set "transports", ["xhr-polling"]
 
       @socket_server.sockets.on "connection", (connection) =>
-         new Client(connection, this)
+         @clients.push new Client(connection, this)
 
    broadcast: (message) ->
       @socket_server.sockets.emit("message", message)
+
+   pm: (username, message) ->
+      client = null
+
+      for c in @clients
+         if c.username == username
+            client = c
+            break
+
+      return if not client?
+
+      client.connection.emit "message", message
+      
 
 
 exports.Server = Server
