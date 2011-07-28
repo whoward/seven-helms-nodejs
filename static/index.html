@@ -1,9 +1,24 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>Mud client</title>
+      <title>Seven Helms - Legend of the Hammer</title>
+      <script src="http://code.jquery.com/jquery-1.6.2.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+      <script src="/main.js"></script>
    </head>
    <body>
-      <h1>Hello!</h1>
+      <div>
+         <p>
+            <label for="messageText">Message</label>
+            <input type="text" id="messageText"/>
+         </p>
+         <p>
+            <button id="sendButton">Send</button>
+         </p>
+      </div>
+      <div>
+         <ul id="messages">
+         </ul>
+      </div>
    </body>
 </html>
