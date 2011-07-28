@@ -1,6 +1,6 @@
 global.App = 
    root: __dirname
-   port: 8080
+   port: process.env.PORT || 8080
 
 World        = require("game").World
 EventManager = require("event_manager").EventManager
