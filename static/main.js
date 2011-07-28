@@ -1,5 +1,5 @@
 $(document).ready(function() {
-   var webSocket = io.connect('http://' + window.location.host)
+   var webSocket = io.connect();
 
    webSocket.on('connect', function() {
       $('#messages').append('<li>Connected to the server.</li>');
