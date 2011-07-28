@@ -6,7 +6,9 @@ World        = require("./lib/game").World
 EventManager = require("./lib/event_manager").EventManager
 http         = require "http"
 static       = require "node-static"
-socketIO     = require "socket.io"
+io           = require "socket.io"
+
+console.log "process.env.NODE_ENV is:", process.env.NODE_ENV
 
 startup_manager = new EventManager
 
@@ -23,7 +25,7 @@ startup_manager.complete ->
 
    httpServer.listen(App.port)
 
-   webSocket = socketIO.listen(httpServer)
+   webSocket = io.listen(httpServer)
 
    webSocket.sockets.on "connection", (client) ->
       client.emit "message", "Please enter a user name ..."
@@ -39,5 +41,8 @@ startup_manager.complete ->
       
       client.on "disconnect", ->
          webSocket.sockets.emit "message", userName + " has left the zone."
+
+   webSocket.configure ->
+     webSocket.set 'transports', ['xhr-polling']
 
    console.log("server started, view at http://127.0.0.1:#{App.port}/")
