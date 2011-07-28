@@ -30,4 +30,4 @@ World.instance = ->
       World.__instance = new World
    return World.__instance
 
-exports.World = World
+exports.World = World.instance()

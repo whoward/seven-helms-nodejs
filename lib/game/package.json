@@ -1,5 +1,5 @@
 {
   "name"          : "game",
   "description"   : "collection of all classes for parsing and accessing the game definition data",
-  "main"          : "./world.coffee"
+  "main"          : "./game.coffee"
 }
