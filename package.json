@@ -1,4 +1,9 @@
 {
    "name":    "seven-helms",
-   "version": "0.0.1"
+   "version": "0.0.1",
+   "dependencies": {
+      "coffee-script": "1.1.1",
+      "node-static": "0.5.7",
+      "socket.io": "0.7.7"
+   }
 }
