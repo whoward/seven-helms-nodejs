@@ -26,8 +26,6 @@ class World
          
 
 World.instance = ->
-   if not World.__instance?
-      World.__instance = new World
-   return World.__instance
+   return World.__instance ||= new World()
 
 exports.World = World.instance()

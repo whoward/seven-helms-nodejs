@@ -1,0 +1,14 @@
+body {
+   background-color: black;
+   color: white;   
+}
+
+#messages {
+   list-style-type: none;
+   padding: 0;
+   max-height: 90%;
+}
+
+#console {
+   padding: 5px 10px;
+}

@@ -1,0 +1,8 @@
+main:
+   - jquery-1.6.2.js
+
+   - screen.coffee
+   - connection.coffee
+   - keyboard_input_handler.coffee
+
+   - main.coffee
