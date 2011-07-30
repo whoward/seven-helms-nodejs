@@ -9,7 +9,8 @@ class window.Screen
 
       # each time the viewport resizes update the height of the console container to match
       jQuery(window).resize =>
-         @container.css "height", jQuery(window).height()
+         @container.css "height", jQuery(window).height() - 20
+         @container.css "width", jQuery(window).width() - 40
 
       jQuery(window).trigger("resize")
 
@@ -20,7 +21,7 @@ class window.Screen
          animateScroll: true
          enableKeyboardNavigation: false
          autoReinitialise: true
-         autoReinitialiseDelay: 100
+         autoReinitialiseDelay: 500
 
       # and display the console input
       this.clearInput()

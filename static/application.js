@@ -9074,8 +9074,8 @@ function handler(event) {
       this.messages = jQuery("<ul/>").attr("id", "messages").appendTo(container);
       this.input = jQuery("<div/>").attr("id", "console").appendTo(container);
       jQuery(window).resize(__bind(function() {
-        this.container.css("height", jQuery(window).height());
-        return console.log(jQuery(window).height());
+        this.container.css("height", jQuery(window).height() - 20);
+        return this.container.css("width", jQuery(window).width() - 40);
       }, this));
       jQuery(window).trigger("resize");
       this.container.jScrollPane({
@@ -9084,10 +9084,8 @@ function handler(event) {
         animateScroll: true,
         enableKeyboardNavigation: false,
         autoReinitialise: true,
-        autoReinitialiseDelay: 100
+        autoReinitialiseDelay: 500
       });
-      this.container.data("jsp").scrollToBottom(false);
-      this.appendMessage("scroll to bottom");
       this.clearInput();
     }
     Screen.prototype.clearInput = function() {
