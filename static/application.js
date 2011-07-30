@@ -9172,9 +9172,6 @@ function handler(event) {
   jQuery(document).ready(function() {
     window.game_screen = new GameScreen("body");
     window.input_handler = new KeyboardInputHandler();
-    window.connection = new Connection();
-    return jQuery(window).unload(function() {
-      return connection.disconnect();
-    });
+    return window.connection = new Connection();
   });
 }).call(this);
