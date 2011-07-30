@@ -30,6 +30,21 @@ class Server
    broadcast: (message) ->
       @socket_server.sockets.emit("message", message)
 
+   user_list: ->
+      result = []
+
+      guest_count = 0
+      
+      for c in @clients
+         if c.username
+            result.push(c.username)
+         else
+            guest_count += 1
+
+      result.push("#{guest_count} guests") if guest_count > 0
+
+      result
+
    pm: (username, message) ->
       client = null
 
@@ -40,6 +55,11 @@ class Server
 
       return if not client?
 
-      client.connection.emit "message", message
+      client.connection.emit "pm", message
+
+   removeClient: (client) ->
+      index = @clients.indexOf(client)
+      if index >= 0
+         @clients.splice index, 1
 
 exports.Server = Server

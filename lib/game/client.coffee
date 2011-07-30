@@ -19,7 +19,10 @@ class Client
          this.processDisconnect()
 
    setUsername: (username) ->
-      if UsernameRegex.test(username)
+      if @server.user_list().contains username
+         @connection.emit "message", "Sorry, that username is already in use"
+
+      else if UsernameRegex.test(username || "")
          # if already defined then this is a rename
          if @username
             @server.broadcast "#{@username} is now known as #{username}"
@@ -41,9 +44,11 @@ class Client
       switch command
          when "pm" then @server.pm params.username, "#{@username} says: #{params.message}"
          when "rename" then this.setUsername(params.username)
+         when "list" then @connection.emit "list", @server.user_list()
 
    processDisconnect: ->
       @server.broadcast "#{@username} has left the zone."
+      @server.removeClient(this)
 
 
 

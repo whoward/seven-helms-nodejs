@@ -9,6 +9,12 @@ class window.Connection
       @socket.on "message", (message) ->
          game_screen.appendMessage(message)
 
+      @socket.on "pm", (message) ->
+         game_screen.coloredMessage "blue", message
+
+      @socket.on "list", (playerList) ->
+         game_screen.coloredMessage "blue", "Users: #{playerList.join(", ")}"
+
       @socket.on "disconnect", ->
          game_screen.coloredMessage "red", "Disconnected from the server."
 
@@ -26,3 +32,6 @@ class window.Connection
    rename: (name) ->
       this.command "rename"
          username: name
+
+   list: ->
+      this.command "list"

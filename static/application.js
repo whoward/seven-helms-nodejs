@@ -9149,6 +9149,8 @@ function handler(event) {
             return this.unknownCommand("usage: /say <username> <message>".html_escape());
           }
           break;
+        case "list":
+          return connection.list();
         case "rename":
           return connection.rename(text);
         case "help":
@@ -9179,6 +9181,12 @@ function handler(event) {
       this.socket.on("message", function(message) {
         return game_screen.appendMessage(message);
       });
+      this.socket.on("pm", function(message) {
+        return game_screen.coloredMessage("blue", message);
+      });
+      this.socket.on("list", function(playerList) {
+        return game_screen.coloredMessage("blue", "Users: " + (playerList.join(", ")));
+      });
       this.socket.on("disconnect", function() {
         return game_screen.coloredMessage("red", "Disconnected from the server.");
       });
@@ -9199,6 +9207,9 @@ function handler(event) {
       return this.command("rename", {
         username: name
       });
+    };
+    Connection.prototype.list = function() {
+      return this.command("list");
     };
     return Connection;
   })();

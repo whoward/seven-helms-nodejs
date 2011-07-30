@@ -1,4 +1,7 @@
 
+Array::contains = (x) ->
+   this.indexOf(x) >= 0
+
 String::safe = ->
    @__is_html_safe = true
    this

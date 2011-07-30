@@ -66,6 +66,8 @@ class window.GameScreen
             else
                this.unknownCommand "usage: /say <username> <message>".html_escape()
 
+         when "list" then connection.list()
+
          when "rename" then connection.rename(text)
 
          when "help" then this.printHelp()
