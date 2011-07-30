@@ -3,3 +3,5 @@ jQuery(document).ready ->
    window.input_handler = new KeyboardInputHandler()
    window.connection = new Connection()
 
+   jQuery(window).unload ->
+      connection.disconnect()
