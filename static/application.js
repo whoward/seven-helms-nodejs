@@ -9108,6 +9108,7 @@ function handler(event) {
         autoReinitialiseDelay: 500
       });
       this.clearInput();
+      this.coloredMessage("golden-yellow", "type /help for commands");
     }
     GameScreen.prototype.clearInput = function() {
       return this.setInputText("");

@@ -27,6 +27,9 @@ class window.GameScreen
       # and display the console input
       this.clearInput()
 
+      # and display a friendly message about help
+      this.coloredMessage "golden-yellow", "type /help for commands"
+
    clearInput: ->
       this.setInputText ""
    
