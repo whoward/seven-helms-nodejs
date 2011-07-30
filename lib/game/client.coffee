@@ -1,6 +1,5 @@
 class Client
    constructor: (connection, server) ->
-      console.log("new connection!")
       @connection = connection
       @server = server
 

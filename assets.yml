@@ -1,5 +1,7 @@
 main:
    - jquery-1.6.2.js
+   - jquery.jscrollpane.min.js
+   - jquery.mousewheel.js
 
    - screen.coffee
    - connection.coffee
