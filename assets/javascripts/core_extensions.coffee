@@ -2,6 +2,12 @@
 Array::contains = (x) ->
    this.indexOf(x) >= 0
 
+Array::compact = (x) ->
+   result = []
+   for elem in this
+      result.push(elem) unless elem is null or typeof elem is "undefined"
+   result
+
 String::safe = ->
    @__is_html_safe = true
    this

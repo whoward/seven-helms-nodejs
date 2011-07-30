@@ -1,4 +1,8 @@
 id: 1-01
 name: Encampment
 description: >
-   Hello World!
+   You step into the camp area, the fire is still burning.  Sir Jacob is
+   standing next to the abandoned shop.  The chaos star surrounded by 
+   pillars seems to be burning as if lit on fire.
+exits:
+   north: 1-02

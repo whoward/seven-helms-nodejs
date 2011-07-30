@@ -9067,6 +9067,20 @@ function handler(event) {
 }
 
 })(jQuery);(function() {
+  Array.prototype.contains = function(x) {
+    return this.indexOf(x) >= 0;
+  };
+  Array.prototype.compact = function(x) {
+    var elem, result, _i, _len;
+    result = [];
+    for (_i = 0, _len = this.length; _i < _len; _i++) {
+      elem = this[_i];
+      if (!(elem === null || typeof elem === "undefined")) {
+        result.push(elem);
+      }
+    }
+    return result;
+  };
   String.prototype.safe = function() {
     this.__is_html_safe = true;
     return this;
@@ -9149,6 +9163,8 @@ function handler(event) {
             return this.unknownCommand("usage: /say <username> <message>".html_escape());
           }
           break;
+        case "go":
+          return connection.go(text);
         case "list":
           return connection.list();
         case "rename":
@@ -9160,13 +9176,36 @@ function handler(event) {
       }
     };
     GameScreen.prototype.printHelp = function() {
-      return this.coloredMessage("golden-yellow", "commands: /say /rename /help");
+      return this.coloredMessage("golden-yellow", "commands: /say /rename /help /list /go");
     };
     GameScreen.prototype.unknownCommand = function(message) {
       return this.coloredMessage("purple", message);
     };
     GameScreen.prototype.coloredMessage = function(colorClass, message) {
       return this.appendMessage(("<span class='bold " + (colorClass.h()) + "'>" + (message.h()) + "</span>").safe());
+    };
+    GameScreen.prototype.displayArea = function(area) {
+      var dir, exit_count, name, _ref, _results;
+      exit_count = ((function() {
+        var _ref, _results;
+        _ref = area.exits;
+        _results = [];
+        for (dir in _ref) {
+          name = _ref[dir];
+          _results.push(dir);
+        }
+        return _results;
+      })()).length;
+      this.messages.append("<li class='area-header'>" + (area.name.h()) + "</li>");
+      this.appendMessage(area.description.h());
+      this.coloredMessage("purple", "There are " + exit_count + " obvious exits:");
+      _ref = area.exits;
+      _results = [];
+      for (dir in _ref) {
+        name = _ref[dir];
+        _results.push(this.coloredMessage("purple", "\t" + dir + ": " + name));
+      }
+      return _results;
     };
     return GameScreen;
   })();
@@ -9186,6 +9225,12 @@ function handler(event) {
       });
       this.socket.on("list", function(playerList) {
         return game_screen.coloredMessage("blue", "Users: " + (playerList.join(", ")));
+      });
+      this.socket.on("area", function(areaData) {
+        return game_screen.displayArea(areaData);
+      });
+      this.socket.on("error", function(message) {
+        return game_screen.coloredMessage("purple", message);
       });
       this.socket.on("disconnect", function() {
         return game_screen.coloredMessage("red", "Disconnected from the server.");
@@ -9210,6 +9255,11 @@ function handler(event) {
     };
     Connection.prototype.list = function() {
       return this.command("list");
+    };
+    Connection.prototype.go = function(dir) {
+      return this.command("go", {
+        direction: dir
+      });
     };
     return Connection;
   })();

@@ -1,4 +1,8 @@
 id: 1-02
-name: Samael's Shoppe
+name: Abandoned Shoppe
 description: >
-   Lots of junk around here, whoa
+   You step into the abandoned shop, there are several cracks in the floor
+   the shelves are ransacked.  Several broken jars that once contained 
+   potions now lie on the floor.  Other than that the shop seems empty.
+exits:
+   south: 1-01

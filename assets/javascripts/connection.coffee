@@ -15,6 +15,12 @@ class window.Connection
       @socket.on "list", (playerList) ->
          game_screen.coloredMessage "blue", "Users: #{playerList.join(", ")}"
 
+      @socket.on "area", (areaData) ->
+         game_screen.displayArea(areaData)
+
+      @socket.on "error", (message) ->
+         game_screen.coloredMessage "purple", message
+
       @socket.on "disconnect", ->
          game_screen.coloredMessage "red", "Disconnected from the server."
 
@@ -35,3 +41,7 @@ class window.Connection
 
    list: ->
       this.command "list"
+
+   go: (dir) ->
+      this.command "go"
+         direction: dir

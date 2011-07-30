@@ -66,6 +66,8 @@ class window.GameScreen
             else
                this.unknownCommand "usage: /say <username> <message>".html_escape()
 
+         when "go" then connection.go(text)
+
          when "list" then connection.list()
 
          when "rename" then connection.rename(text)
@@ -75,7 +77,7 @@ class window.GameScreen
          else this.unknownCommand "Sorry, I don't understand the command \"#{command}\""
 
    printHelp: ->
-      this.coloredMessage "golden-yellow", "commands: /say /rename /help"
+      this.coloredMessage "golden-yellow", "commands: /say /rename /help /list /go"
 
    unknownCommand: (message) ->
       this.coloredMessage "purple", message
@@ -83,3 +85,14 @@ class window.GameScreen
    coloredMessage: (colorClass, message) ->
       this.appendMessage "<span class='bold #{colorClass.h()}'>#{message.h()}</span>".safe()
 
+   displayArea: (area) ->
+      exit_count = (dir for dir, name of area.exits).length
+
+      @messages.append "<li class='area-header'>#{area.name.h()}</li>"
+      
+      this.appendMessage area.description.h()
+
+      this.coloredMessage "purple", "There are #{exit_count} obvious exits:"
+
+      for dir, name of area.exits
+         this.coloredMessage "purple", "\t#{dir}: #{name}"

@@ -4,7 +4,7 @@ global.App =
    port: process.env.PORT || 8080
 
 # load in our core extensions
-require("./assets/javascripts/core_extensions.coffee")
+#require("./assets/javascripts/core_extensions.coffee")
 
 # load in libraries used in this server
 game         = require("./lib/game")
