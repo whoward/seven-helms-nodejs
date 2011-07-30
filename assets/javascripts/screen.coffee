@@ -1,17 +1,19 @@
 
 class window.Screen
    constructor: (root) ->
+      # build up the console divs
       @container = jQuery("<div/>").attr("id", "container").appendTo(root)
 
       @messages = jQuery("<ul/>").attr("id", "messages").appendTo(container)
       @input = jQuery("<div/>").attr("id", "console").appendTo(container)
 
+      # each time the viewport resizes update the height of the console container to match
       jQuery(window).resize =>
          @container.css "height", jQuery(window).height()
-         console.log jQuery(window).height()
 
       jQuery(window).trigger("resize")
 
+      # use a scroll pane (regulated by jQuery) to display the console
       @container.jScrollPane
          maintainPosition: true
          stickToBottom: true
@@ -20,9 +22,7 @@ class window.Screen
          autoReinitialise: true
          autoReinitialiseDelay: 100
 
-      @container.data("jsp").scrollToBottom false 
-      @appendMessage "scroll to bottom"
-
+      # and display the console input
       this.clearInput()
 
    clearInput: ->

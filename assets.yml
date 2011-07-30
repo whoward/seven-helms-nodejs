@@ -1,10 +1,14 @@
-main:
-   - jquery-1.6.2.js
-   - jquery.jscrollpane.min.js
-   - jquery.mousewheel.js
+application.js:
+   - javascripts/lib/jquery-1.6.2.js
+   - javascripts/lib/jquery.jscrollpane.min.js
+   - javascripts/lib/jquery.mousewheel.js
 
-   - screen.coffee
-   - connection.coffee
-   - keyboard_input_handler.coffee
+   - javascripts/screen.coffee
+   - javascripts/connection.coffee
+   - javascripts/keyboard_input_handler.coffee
 
-   - main.coffee
+   - javascripts/application.coffee
+
+application.css:
+   - stylesheets/application.sass
+   - stylesheets/jquery.jscrollpane.sass
