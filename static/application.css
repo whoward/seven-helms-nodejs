@@ -24,6 +24,21 @@ body {
 #console {
   padding: 5px 0px;
   white-space: pre-wrap; }
+
+.bold {
+  font-weight: bold; }
+
+.red {
+  color: #ed1c24; }
+
+.blue {
+  color: #00a2e8; }
+
+.purple {
+  color: #aa00aa; }
+
+.golden-yellow {
+  color: #ffc90e; }
 /* CSS Styles that are needed by jScrollPane for it to operate correctly.
  *
  * Include this stylesheet in your site or copy and paste the styles below into your stylesheet - jScrollPane

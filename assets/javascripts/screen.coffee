@@ -1,3 +1,4 @@
+CommandRegex = /^\/([A-Za-z]+)(\s+(.+))?/
 
 class window.GameScreen
    constructor: (root) ->
@@ -34,14 +35,46 @@ class window.GameScreen
       @input.html "> #{@input_text}_"
 
    appendMessage: (message) ->
-      @messages.append "<li>#{message}</li>"
+      @messages.append "<li>#{message.h()}</li>"
 
    appendInput: (chars) ->
       this.setInputText @input_text + chars
 
    submitInput: ->
-      connection.message(@input_text)
+      if match = CommandRegex.exec(@input_text)
+         this.processCommand(match[1], match[3])
+      else if @input_text[0] is "/"
+         this.unknownCommand "Sorry, I don't understand what kind of command you're trying to do"
+      else
+         connection.message(@input_text)
+      
       this.clearInput()
 
    backspace: ->
       this.setInputText @input_text[0..-2]
+
+   processCommand: (command, text) ->
+      switch command
+         when "say"
+            [username, message] = (/^([A-Za-z0-9\_\-]+)\s+(.+)/.exec(text) || ["", "", ""])[1..]
+            if username and message
+               connection.pm username, message
+               this.coloredMessage "blue", "to #{username}: #{message}"
+            else
+               this.unknownCommand "usage: /say <username> <message>".html_escape()
+
+         when "rename" then connection.rename(text)
+
+         when "help" then this.printHelp()
+
+         else this.unknownCommand "Sorry, I don't understand the command \"#{command}\""
+
+   printHelp: ->
+      this.coloredMessage "golden-yellow", "commands: /say /rename /help"
+
+   unknownCommand: (message) ->
+      this.coloredMessage "purple", message
+
+   coloredMessage: (colorClass, message) ->
+      this.appendMessage "<span class='bold #{colorClass.h()}'>#{message.h()}</span>".safe()
+

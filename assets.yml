@@ -3,6 +3,8 @@ application.js:
    - javascripts/lib/jquery.jscrollpane.min.js
    - javascripts/lib/jquery.mousewheel.js
 
+   - javascripts/core_extensions.coffee
+
    - javascripts/screen.coffee
    - javascripts/connection.coffee
    - javascripts/keyboard_input_handler.coffee

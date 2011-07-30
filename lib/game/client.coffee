@@ -1,3 +1,5 @@
+UsernameRegex = /^[A-Za-z0-9\_\-]+$/
+
 class Client
    constructor: (connection, server) ->
       @connection = connection
@@ -10,25 +12,39 @@ class Client
       @connection.on "message", (message) =>
          this.processMessage(message)
 
+      @connection.on "command", (command, params) =>
+         this.processCommand(command, params)
+
       @connection.on "disconnect", =>
          this.processDisconnect()
 
-   processMessage: (message) ->
-      if !@username
-         @username = message
-         @server.broadcast "#{@username} has entered the zone."
-         return
-      
-      if message.indexOf("/say ") is 0
-         words = message.split(/\s+/)
-         user = words[1]
-         message = words[2..-1].join(" ")
+   setUsername: (username) ->
+      if UsernameRegex.test(username)
+         # if already defined then this is a rename
+         if @username
+            @server.broadcast "#{@username} is now known as #{username}"
+         else
+            @server.broadcast "#{username} has entered the zone."
 
-         @server.pm user, "#{@username} says: #{message}"
+         @username = username
+
+      else
+         @connection.emit "message", "Please only use letters, numbers, underscores (_) and hyphens (-)"
+
+   processMessage: (message) ->
+      if not @username
+         this.setUsername(message) 
       else
          @server.broadcast "#{@username}: #{message}"
 
+   processCommand: (command, params) ->
+      switch command
+         when "pm" then @server.pm params.username, "#{@username} says: #{params.message}"
+         when "rename" then this.setUsername(params.username)
+
    processDisconnect: ->
       @server.broadcast "#{@username} has left the zone."
+
+
 
 exports.Client = Client

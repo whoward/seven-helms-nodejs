@@ -9067,7 +9067,28 @@ function handler(event) {
 }
 
 })(jQuery);(function() {
+  String.prototype.safe = function() {
+    this.__is_html_safe = true;
+    return this;
+  };
+  String.prototype.html_escape = function() {
+    var escaped;
+    if (this.__is_html_safe) {
+      return this;
+    } else {
+      escaped = new String(this.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+      escaped.__is_html_safe = true;
+      return escaped;
+    }
+  };
+  String.prototype.h = function() {
+    return this.html_escape().toString();
+  };
+}).call(this);
+(function() {
+  var CommandRegex;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  CommandRegex = /^\/([A-Za-z]+)(\s+(.+))?/;
   window.GameScreen = (function() {
     function GameScreen(root) {
       this.container = jQuery("<div/>").attr("id", "container").appendTo(root);
@@ -9096,17 +9117,53 @@ function handler(event) {
       return this.input.html("> " + this.input_text + "_");
     };
     GameScreen.prototype.appendMessage = function(message) {
-      return this.messages.append("<li>" + message + "</li>");
+      return this.messages.append("<li>" + (message.h()) + "</li>");
     };
     GameScreen.prototype.appendInput = function(chars) {
       return this.setInputText(this.input_text + chars);
     };
     GameScreen.prototype.submitInput = function() {
-      connection.message(this.input_text);
+      var match;
+      if (match = CommandRegex.exec(this.input_text)) {
+        this.processCommand(match[1], match[3]);
+      } else if (this.input_text[0] === "/") {
+        this.unknownCommand("Sorry, I don't understand what kind of command you're trying to do");
+      } else {
+        connection.message(this.input_text);
+      }
       return this.clearInput();
     };
     GameScreen.prototype.backspace = function() {
       return this.setInputText(this.input_text.slice(0, -1));
+    };
+    GameScreen.prototype.processCommand = function(command, text) {
+      var message, username, _ref;
+      switch (command) {
+        case "say":
+          _ref = (/^([A-Za-z0-9\_\-]+)\s+(.+)/.exec(text) || ["", "", ""]).slice(1), username = _ref[0], message = _ref[1];
+          if (username && message) {
+            connection.pm(username, message);
+            return this.coloredMessage("blue", "to " + username + ": " + message);
+          } else {
+            return this.unknownCommand("usage: /say <username> <message>".html_escape());
+          }
+          break;
+        case "rename":
+          return connection.rename(text);
+        case "help":
+          return this.printHelp();
+        default:
+          return this.unknownCommand("Sorry, I don't understand the command \"" + command + "\"");
+      }
+    };
+    GameScreen.prototype.printHelp = function() {
+      return this.coloredMessage("golden-yellow", "commands: /say /rename /help");
+    };
+    GameScreen.prototype.unknownCommand = function(message) {
+      return this.coloredMessage("purple", message);
+    };
+    GameScreen.prototype.coloredMessage = function(colorClass, message) {
+      return this.appendMessage(("<span class='bold " + (colorClass.h()) + "'>" + (message.h()) + "</span>").safe());
     };
     return GameScreen;
   })();
@@ -9116,22 +9173,31 @@ function handler(event) {
     function Connection() {
       this.socket = io.connect();
       this.socket.on("connect", function() {
-        return game_screen.appendMessage("Connected to the server.");
+        return game_screen.coloredMessage("red", "Connected to the server.");
       });
       this.socket.on("message", function(message) {
         return game_screen.appendMessage(message);
       });
       this.socket.on("disconnect", function() {
-        return game_screen.appendMessage("Disconnected from the server.");
+        return game_screen.coloredMessage("red", "Disconnected from the server.");
       });
     }
     Connection.prototype.message = function(message) {
       return this.socket.emit("message", message);
     };
     Connection.prototype.command = function(command, params) {
-      return this.socket.emit("command", jQuery.extend(params, {
-        "command": command
-      }));
+      return this.socket.emit("command", command, params);
+    };
+    Connection.prototype.pm = function(name, msg) {
+      return this.command("pm", {
+        username: name,
+        message: msg
+      });
+    };
+    Connection.prototype.rename = function(name) {
+      return this.command("rename", {
+        username: name
+      });
     };
     return Connection;
   })();
