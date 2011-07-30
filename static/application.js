@@ -9071,8 +9071,8 @@ function handler(event) {
   window.Screen = (function() {
     function Screen(root) {
       this.container = jQuery("<div/>").attr("id", "container").appendTo(root);
-      this.messages = jQuery("<ul/>").attr("id", "messages").appendTo(container);
-      this.input = jQuery("<div/>").attr("id", "console").appendTo(container);
+      this.messages = jQuery("<ul/>").attr("id", "messages").appendTo(this.container);
+      this.input = jQuery("<div/>").attr("id", "console").appendTo(this.container);
       jQuery(window).resize(__bind(function() {
         this.container.css("height", jQuery(window).height() - 20);
         return this.container.css("width", jQuery(window).width() - 40);

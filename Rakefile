@@ -2,7 +2,9 @@ require 'rubygems'
 require 'bundler'
 require 'yaml'
 
-Bundler.require(:default)
+require 'coffee_script'
+require 'sass'
+require 'json'
 
 desc "compiles all static files"
 task :compile => ["compile:world", "compile:assets"]

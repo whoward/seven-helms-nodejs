@@ -4,8 +4,8 @@ class window.Screen
       # build up the console divs
       @container = jQuery("<div/>").attr("id", "container").appendTo(root)
 
-      @messages = jQuery("<ul/>").attr("id", "messages").appendTo(container)
-      @input = jQuery("<div/>").attr("id", "console").appendTo(container)
+      @messages = jQuery("<ul/>").attr("id", "messages").appendTo(@container)
+      @input = jQuery("<div/>").attr("id", "console").appendTo(@container)
 
       # each time the viewport resizes update the height of the console container to match
       jQuery(window).resize =>
