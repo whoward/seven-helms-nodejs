@@ -12,14 +12,14 @@ class window.KeyboardInputHandler
    commandKey: (keyCode) ->
       switch keyCode
          # enter key
-         when 13 then screen.submitInput()
+         when 13 then game_screen.submitInput()
 
          # backspace key
-         when 8 then screen.backspace()
+         when 8 then game_screen.backspace()
 
          else return true
       
       return false
 
    textKey: (char) ->
-      screen.appendInput(char)
+      game_screen.appendInput(char)

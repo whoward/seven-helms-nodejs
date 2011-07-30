@@ -4,13 +4,13 @@ class window.Connection
       @socket = io.connect()
 
       @socket.on "connect", ->
-         screen.appendMessage "Connected to the server."
+         game_screen.appendMessage "Connected to the server."
 
       @socket.on "message", (message) ->
-         screen.appendMessage(message)
+         game_screen.appendMessage(message)
 
       @socket.on "disconnect", ->
-         screen.appendMessage "Disconnected from the server."
+         game_screen.appendMessage "Disconnected from the server."
 
    message: (message) ->
       @socket.emit "message", message

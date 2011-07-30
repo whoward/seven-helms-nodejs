@@ -9068,8 +9068,8 @@ function handler(event) {
 
 })(jQuery);(function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-  window.Screen = (function() {
-    function Screen(root) {
+  window.GameScreen = (function() {
+    function GameScreen(root) {
       this.container = jQuery("<div/>").attr("id", "container").appendTo(root);
       this.messages = jQuery("<ul/>").attr("id", "messages").appendTo(this.container);
       this.input = jQuery("<div/>").attr("id", "console").appendTo(this.container);
@@ -9088,27 +9088,27 @@ function handler(event) {
       });
       this.clearInput();
     }
-    Screen.prototype.clearInput = function() {
+    GameScreen.prototype.clearInput = function() {
       return this.setInputText("");
     };
-    Screen.prototype.setInputText = function(text) {
+    GameScreen.prototype.setInputText = function(text) {
       this.input_text = text;
       return this.input.html("> " + this.input_text + "_");
     };
-    Screen.prototype.appendMessage = function(message) {
+    GameScreen.prototype.appendMessage = function(message) {
       return this.messages.append("<li>" + message + "</li>");
     };
-    Screen.prototype.appendInput = function(chars) {
+    GameScreen.prototype.appendInput = function(chars) {
       return this.setInputText(this.input_text + chars);
     };
-    Screen.prototype.submitInput = function() {
+    GameScreen.prototype.submitInput = function() {
       connection.message(this.input_text);
       return this.clearInput();
     };
-    Screen.prototype.backspace = function() {
+    GameScreen.prototype.backspace = function() {
       return this.setInputText(this.input_text.slice(0, -1));
     };
-    return Screen;
+    return GameScreen;
   })();
 }).call(this);
 (function() {
@@ -9116,13 +9116,13 @@ function handler(event) {
     function Connection() {
       this.socket = io.connect();
       this.socket.on("connect", function() {
-        return screen.appendMessage("Connected to the server.");
+        return game_screen.appendMessage("Connected to the server.");
       });
       this.socket.on("message", function(message) {
-        return screen.appendMessage(message);
+        return game_screen.appendMessage(message);
       });
       this.socket.on("disconnect", function() {
-        return screen.appendMessage("Disconnected from the server.");
+        return game_screen.appendMessage("Disconnected from the server.");
       });
     }
     Connection.prototype.message = function(message) {
@@ -9152,10 +9152,10 @@ function handler(event) {
     KeyboardInputHandler.prototype.commandKey = function(keyCode) {
       switch (keyCode) {
         case 13:
-          screen.submitInput();
+          game_screen.submitInput();
           break;
         case 8:
-          screen.backspace();
+          game_screen.backspace();
           break;
         default:
           return true;
@@ -9163,14 +9163,14 @@ function handler(event) {
       return false;
     };
     KeyboardInputHandler.prototype.textKey = function(char) {
-      return screen.appendInput(char);
+      return game_screen.appendInput(char);
     };
     return KeyboardInputHandler;
   })();
 }).call(this);
 (function() {
   jQuery(document).ready(function() {
-    window.screen = new Screen("body");
+    window.game_screen = new GameScreen("body");
     window.input_handler = new KeyboardInputHandler();
     return window.connection = new Connection();
   });

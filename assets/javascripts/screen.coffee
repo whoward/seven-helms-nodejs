@@ -1,5 +1,5 @@
 
-class window.Screen
+class window.GameScreen
    constructor: (root) ->
       # build up the console divs
       @container = jQuery("<div/>").attr("id", "container").appendTo(root)

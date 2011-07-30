@@ -1,5 +1,5 @@
 jQuery(document).ready ->
-   window.screen = new Screen("body")
+   window.game_screen = new GameScreen("body")
    window.input_handler = new KeyboardInputHandler()
    window.connection = new Connection()
 
