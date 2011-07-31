@@ -1,0 +1,7 @@
+id: 4-08
+name: Southern area
+description: >
+   You are now standing in the southern area
+exits:
+   "east": 4-07
+   "west": 4-09

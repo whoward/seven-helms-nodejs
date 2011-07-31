@@ -1,0 +1,14 @@
+id: 2-06
+name: Dining Hall
+description: >
+   You are now standing...in a hall of horror.  Littered all around
+   are corpses of dwarfs and humans.  Some lay on tables with cut marks
+   on their bodies.  Some are fresh and still leak blood. You turn your
+   head away from this horror to any possible exits you can find. To the
+   north is a small corridor.  To the west lies a small room which appears
+   to be a spiral staircase, and to the east remains the rest of this
+   great hall of horror.
+exits:
+   "north": 2-03
+   "east": 2-08
+   "west": 2-10

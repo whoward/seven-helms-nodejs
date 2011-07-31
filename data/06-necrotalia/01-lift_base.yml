@@ -1,0 +1,12 @@
+id: 6-01
+name: Lair - Lift Base
+description: >
+   You are now standing at the base of the lift, above you is a long shaft which
+   the lift descended from.  This seems to be the base of the elevator, it seems
+   impossible to force the lift to return to the top level.  You can not easily 
+   see the area around you because it is too dark.  There is a small chaos star 
+   which seems to be burning in the middle of several pillars.
+
+   To the north there is a dark passageway.
+exits:
+   "north": 6-02

@@ -1,0 +1,7 @@
+id: 4-06
+name: Eastern area
+description: >
+   You are now standing in the eastern area
+exits:
+   "north": 4-05
+   "south": 4-07

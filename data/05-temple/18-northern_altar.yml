@@ -1,0 +1,7 @@
+id: 5-18
+name: Northern Passageway - Altar
+description: >
+   You are now standing at a dead end.  There is a small shrine built into
+   the nearby wall, on the shrine lies a black gem.
+exits:
+   "south": 5-12

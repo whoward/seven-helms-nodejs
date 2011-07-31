@@ -1,0 +1,8 @@
+id: 2-12
+name: Stage
+description: >
+   You are now standing on the stage, corpses here appear to be crucified.
+   There is a large throne sitting in the middle of the stage.
+exits:
+   "east": 2-13
+   "west": 2-09

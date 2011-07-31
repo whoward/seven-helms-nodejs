@@ -1,0 +1,11 @@
+id: 3-13
+name: Shrine
+description: >
+   You have entered a small intersection with a chaos shrine placed in
+   one of the walls.  There are exits to the north, south and west. To
+   the north is a tunnel emerging into a small room. The south passage
+   also leads to a small room.  To the west is the pool of blood.
+exits:
+   "north": 3-14
+   "south": 3-15
+   "west": 3-08

@@ -1,0 +1,7 @@
+id: 4-10
+name: Western area
+description: >
+   You are now standing in the western area of the encampment.
+exits:
+   "north": 4-11
+   "south": 4-09

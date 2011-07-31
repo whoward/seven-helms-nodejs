@@ -1,0 +1,10 @@
+id: 5-10
+name: Western Passageway - Fork
+description: >
+   You are now standing in an intersection.  This intersection resembles
+   all the others.  There is a bending hallway to the north and south.
+   There is a short hallway to the west.
+exits:
+   "north": 5-07
+   "south": 5-05
+   "west": 5-19

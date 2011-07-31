@@ -1,0 +1,7 @@
+id: 5-19
+name: Western Passageway - Altar
+description: >
+   You are now standing at a dead end.  In the closest wall is a small shrine
+   displayed on the shrine is a blood gem.
+exits:
+   "east": 5-10

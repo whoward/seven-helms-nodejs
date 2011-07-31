@@ -1,0 +1,6 @@
+id: 4-13
+name: Southeastern Tower
+description: >
+   You are now standing on the southeastern watch tower
+exits:
+   "down": 4-07

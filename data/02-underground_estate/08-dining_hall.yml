@@ -1,0 +1,12 @@
+id: 2-08
+name: Dining Hall
+description: >
+   This room is dominated by corpses and blood.  You begin to feel an urge
+   to leave this evil hall and quickly search for exits. To the north lies
+   a small corridor.  To the east and west lie the rest of the hall. To the
+   south is a small dark passageway.
+exits:
+   "north": 2-04
+   "east": 2-09
+   "south": 2-11
+   "west": 2-06

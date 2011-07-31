@@ -1,0 +1,6 @@
+id: 2-16
+name: Western Jail
+description: >
+   The western jail cell is completely bare and devoid of any objects.
+exits:
+   "east": 2-11

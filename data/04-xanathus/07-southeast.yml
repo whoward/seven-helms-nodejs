@@ -1,0 +1,9 @@
+id: 4-07
+name: Southeastern area
+description: >
+   You are now standing in the southeastern area.
+   It is possible to climb the watchtower from here.   
+exits:
+   "north": 4-06
+   "west": 4-08
+   "up": 4-13

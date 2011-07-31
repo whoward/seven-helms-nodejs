@@ -1,0 +1,9 @@
+id: 4-01
+name: Lift
+description: >
+   The lift has arrived at its lower level, the smell of fresh air floods into
+   it making you feel refreshed.  To the south is short hallway opening out to
+   a large open area.
+exits:
+   "south": 4-02
+   "up": 3-06

@@ -1,0 +1,13 @@
+id: 3-09
+name: Intersection
+description: >
+   This area is yet another intersection.  This particular intersection 
+   splits four ways.  To the north is a long tunnel.  To the east is a
+   small room which you can't identify from this distance.  To the south
+   is a large open room which seems to be a chasm. The western exit leads
+   down a long hallway.
+exits:
+   "north": 3-04
+   "east": 3-11
+   "south": 3-12
+   "west": 3-05

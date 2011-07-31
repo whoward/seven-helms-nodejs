@@ -1,0 +1,9 @@
+id: 4-11
+name: Northwestern area
+description: >
+   You are now standing in the north western area of the encampment.
+   it is possible to climb the watch tower from here.
+exits:
+   "east": 4-04
+   "south": 4-10
+   "up": 4-15

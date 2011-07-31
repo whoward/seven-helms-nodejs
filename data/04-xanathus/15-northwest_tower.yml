@@ -1,0 +1,6 @@
+id: 4-15
+name: Northwestern Tower
+description: >
+   You are now standing on the northwestern watch tower
+exits:
+   "down": 4-11

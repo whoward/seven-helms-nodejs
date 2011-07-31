@@ -1,0 +1,10 @@
+id: 3-05
+name: Intersection
+description: >
+   You have entered a 3-Way intersection.  To the north is the large hall.
+   To the east is a long tunel.  The southern exit leads to an open area
+   which appears to be a chasm.
+exits:
+   "north": 3-02
+   "east": 3-09
+   "south": 3-10

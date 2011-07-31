@@ -1,0 +1,9 @@
+id: 3-01
+name: Base of the Spiral Staircase
+description: >
+   You are now at the bottom of the spiral staircase.  A small hallway
+   to the east opens up into a large spacious room with a burning fire in
+   the middle of this room.
+exits:
+   "east": 3-02
+   "up": 2-10

@@ -1,0 +1,9 @@
+id: 5-02
+name: Southern Passageway - Orange Gem Altar
+description: >
+   You have entered a bright red-orange passage with many torches burning
+   high.  On the floor is a small raised platform with an orange gem
+   embedded in it.
+exits:
+   "north": 5-03
+   "south": 5-01

@@ -1,0 +1,11 @@
+id: 4-02
+name: Hallway
+description: >
+   You have entered a small hallway with walls on all sides, to the southern
+   end of this hallway is a large open area, it appears that this is another
+   area of the city.  Faintly in the distance however you see what looks like
+   watch towers.
+exits:
+   "north": 4-01
+   "west": 4-03
+   "south": 4-04

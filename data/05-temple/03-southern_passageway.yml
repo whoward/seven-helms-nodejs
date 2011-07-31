@@ -1,0 +1,8 @@
+id: 5-03
+name: Southern Passageway
+description: >
+   You are now standing in another section of the tunnel.  So far the tunnel
+   hasn't shown any bends or turns.
+exits:
+   "north": 5-04
+   "south": 5-02

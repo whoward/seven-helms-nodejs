@@ -1,0 +1,8 @@
+id: 3-10
+name: Chasm
+description: >
+   You have entered a large open space with a chasm in the middle. You can't
+   see the bottom of the chasm.  Other than that the area is plain.
+exits:
+   "north": 3-05
+   "east": 3-12

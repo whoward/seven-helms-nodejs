@@ -1,0 +1,7 @@
+id: 5-13
+name: Sanctuary - Southeastern Altar
+description: >
+   You are now standing at a dead end.  In the dead end's wall is a small
+   shrine.  Displayed on the shrine is a blue gem.
+exits:
+   "north west": 5-06

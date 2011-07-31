@@ -1,0 +1,10 @@
+id: 3-08
+name: Blood Pool Room
+description: >
+   You are now standing a room on the far side of the underwater blood pool
+   tunnel.  The room seems relatively plain, made of smooth stone bricks 
+   with the blood resevoir cut into the middle of the floor in a circular
+   tear shape.  To the east you can make out a shrine built into the wall.
+exits:
+   "east": 3-13
+   "down": 3-07

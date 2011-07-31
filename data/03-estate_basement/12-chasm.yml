@@ -1,0 +1,8 @@
+id: 3-12
+name: Chasm
+description: >
+   You have arrived at the eastern edge of the chasm.  The area around you
+   is very open, but plain.
+exits:
+   "north": 3-09
+   "west": 3-10

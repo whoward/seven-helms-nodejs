@@ -1,0 +1,8 @@
+id: 2-05
+name: Storage Room
+description: >
+   You have entered the storage room, it seems as it should except for the
+   corpse lying propped against a wall.  On the shelves are several broken
+   bottles possibly containing potions at one time.
+exits:
+   "east": 2-03

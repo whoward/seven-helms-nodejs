@@ -1,0 +1,8 @@
+id: 3-14
+name: Raised Platform
+description: >
+   You have entered a room with a raised platform in the middle.  On the
+   raised platform is a stand.  On the stand is an empty socket in the
+   shape of a chaos star.
+exits:
+   "south": 3-13

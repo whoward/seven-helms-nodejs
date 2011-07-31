@@ -1,0 +1,13 @@
+id: 5-08
+name: Sanctuary - North East
+description: >
+   You are now standing in the northeastern area of a great hall.
+   the hall is strangely bare except for the large raised platform
+   in the middle of the hall, which has the shape of a chaos star.
+exits:
+   "north": 5-12
+   "north east": 5-14
+   "east": 5-11
+   "south": 5-06
+   "south west": 5-09
+   "west": 5-07

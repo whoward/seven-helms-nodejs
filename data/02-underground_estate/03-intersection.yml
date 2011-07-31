@@ -1,0 +1,11 @@
+id: 2-03
+name: Intersection
+description: >
+   You are now standing in an intersection.  To the north is a tunnel
+   To the east is a long corridor that falls into darkness. To the west
+   is a small storage closet. The south hallway opens into a large room.
+exits:
+   "north": 2-02
+   "east": 2-04
+   "south": 2-06
+   "west": 2-05

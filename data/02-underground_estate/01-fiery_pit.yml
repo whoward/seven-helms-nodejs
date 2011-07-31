@@ -1,0 +1,11 @@
+id: 2-01
+name: Bridge above the Fiery Pit
+description: >
+   You're standing on a smooth stone bridge crossing the chasm above they fiery pit.  Far above you all you can see is
+   the dark starless night, you can attempt to ascend the pit walls to reach your encampment once again.  Examining the
+   bridge you find one end abruptly ends a the side of a cliff wall with what was once a stairway along the cliff edge
+   descending to this bridge.  The other end of this bridge ends at an elaborate doorjam with stone statues flanking
+   both sides.  Beyond the jam is a small room with two adjoining hallways.
+exits:
+   "south": 2-02
+   "up": 1-03

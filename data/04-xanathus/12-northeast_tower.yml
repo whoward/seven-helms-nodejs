@@ -1,0 +1,6 @@
+id: 4-12
+name: Northeastern Tower
+description: >
+   You are now standing on the northeastern watch tower
+exits:
+   "down": 4-05

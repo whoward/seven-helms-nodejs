@@ -1,0 +1,12 @@
+id: 3-02
+name: Torture Room
+description: >
+   You have entered a large room with stone walls.  Several pillars dominate
+   the area.  There is a large burning fire in the center of the room, which 
+   appears to have the form of a chaos star. In the center of the flames you can 
+   see a table with a dead corpse.
+exits:
+   "north": 3-03
+   "east": 3-04
+   "south": 3-05
+   "west": 3-01

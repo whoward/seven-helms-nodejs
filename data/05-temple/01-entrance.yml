@@ -1,0 +1,9 @@
+id: 5-01
+name: Entrance
+description: >
+   You have descended down the stairwell into a poorly lit square room.
+   One wall has several markings on it that interest you.  When you look
+   closer you notice a sphere shaped socket with burn marks around it.
+exits:
+   "north": 5-02
+   "up": 4-16

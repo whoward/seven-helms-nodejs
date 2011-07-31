@@ -1,0 +1,10 @@
+id: 1-03
+name: Fiery Pit
+description: >
+   You are standing at the precipice of the fiery pit, looking down into it you see a smooth stone bridge
+   crossing the gap of the fiery pit about 10 metres down.  The pit continues down for several metres further
+   and ends in a solid surface which burns with unnatural fires.  If you are careful you should 
+   be able to descend down the pit wall to the bridge.
+exits:
+   "south": 1-01
+   "down": 2-01

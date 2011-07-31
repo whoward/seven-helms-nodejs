@@ -1,0 +1,7 @@
+id: 5-17
+name: Eastern Passageway - Altar
+description: >
+   You are now standing at a dead end.  The wall here has a shrine built in
+   it.  On the shrine a grey gem is displayed.
+exits:
+   "west": 5-11

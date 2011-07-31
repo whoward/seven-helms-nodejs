@@ -1,0 +1,9 @@
+id: 3-06
+name: Lift
+description: >
+   You are now standing in some kind of lift.  The room is bare except for
+   a large chaos star burned into the middle.  In the middle of the lift
+   is a socket in the shape of a chaos star.
+exits:
+   "south": 3-03
+   "down": 4-01

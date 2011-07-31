@@ -1,0 +1,7 @@
+id: 5-16
+name: Sanctuary - Northwestern Altar
+description: >
+   You are now standing at a dead end.  There is a small shrine built into
+   the wall, displayed on the shrine is a jade coloured gem.
+exits:
+   "south east": 5-07

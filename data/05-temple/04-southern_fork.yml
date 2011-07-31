@@ -1,0 +1,9 @@
+id: 5-04
+name: Southern Passageway - Fork
+description: >
+   You have entered a three way intersection, to the east and west are 
+   bending passageways.  To the south is the long passageway.
+exits:
+   "east": 5-06
+   "south": 5-03
+   "west": 5-05

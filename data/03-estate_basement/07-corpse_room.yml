@@ -1,0 +1,11 @@
+id: 3-07
+name: Corpse filled room
+description: >
+   You have entered a large dimly lit room filled with corpses. You stare
+   in disgust as you see that their blood seems to be draining into a small
+   pool.  As much as you hate to look at the pool you can make out the edge
+   of a underwater tunnel.
+exits:
+   "north west": 3-03
+   "south west": 3-04
+   "down": 3-08

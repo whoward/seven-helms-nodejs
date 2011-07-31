@@ -1,0 +1,8 @@
+id: 2-02
+name: Entrance
+description: >
+   You enter a small room with two adjoining hallways.
+exits:
+   "north": 2-01
+   "east": 2-04
+   "west": 2-03

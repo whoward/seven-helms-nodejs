@@ -1,0 +1,9 @@
+id: 4-09
+name: Southwestern area
+description: >
+   You are now standing in the southwestern area of the encampment.
+   It is possible to enter the watch tower from here.
+exits:
+   "north": 4-10
+   "east": 4-08
+   "up": 4-14

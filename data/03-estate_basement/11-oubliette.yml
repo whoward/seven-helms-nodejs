@@ -1,0 +1,8 @@
+id: 3-11
+name: Oubliette
+description: >
+   You have entered the dark room. Before you is a deep pit which leads off
+   into the darkness.  There is a walkway forming a U in the room.  In the
+   middle of the room is a small platform with a skeleton in the middle.
+exits:
+   "west": 3-09

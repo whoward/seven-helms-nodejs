@@ -1,0 +1,11 @@
+id: 5-09
+name: Sanctuary - Chancel
+description: >
+   You are now standing on the raised platform in the middle of the hall.
+   Below you is a strange symbol which has markings and text on it.
+exits:
+   "north west": 5-07
+   "north east": 5-08
+   "south east": 5-06
+   "south west": 5-05
+   "down": 6-01

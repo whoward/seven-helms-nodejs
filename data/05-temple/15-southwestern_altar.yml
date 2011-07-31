@@ -1,0 +1,7 @@
+id: 5-15
+name: Sanctuary - Southwestern Altar
+description: >
+   You are now standing at a dead end.  Built into the nearest wall is a small
+   shrine.  On the shrine a white gem is displayed.
+exits:
+   "north east": 5-05

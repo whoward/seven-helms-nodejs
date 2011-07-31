@@ -1,0 +1,8 @@
+id: 3-15
+name: Skull Chamber
+description: >
+   You have entered a small room with many skulls embedded into the wall.
+   As you gaze around the room you realize that two skulls are missing, there
+   are coloured sockets in their place.  One is gold, the other is jade.
+exits:
+   "north": 3-13

@@ -1,0 +1,10 @@
+id: 5-11
+name: Eastern Passageway - Fork
+description: >
+   You are now standing in an intersection.  This intersection seems to be
+   identical to all the others.  There is a bending hallway to the south and
+   north.  There is a short hallway to the east
+exits:
+   "north": 5-08
+   "east": 5-17
+   "south": 5-06

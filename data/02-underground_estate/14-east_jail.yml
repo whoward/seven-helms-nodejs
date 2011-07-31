@@ -1,0 +1,6 @@
+id: 2-14
+name: Eastern Jail
+description: >
+   You enter a jail cell inhabited by one skeleton.
+exits:
+   "west": 2-11

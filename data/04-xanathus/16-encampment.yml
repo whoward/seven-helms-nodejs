@@ -1,0 +1,9 @@
+id: 4-16
+name: Encampment
+description: >
+   You are now standing inside the encampment, except for a few tents and the
+   campfire you see nothing special,  there is one thing however, a stairway
+   leading down into the darkness.
+exits:
+   "north": 4-04
+   "down": 5-01

@@ -1,0 +1,12 @@
+id: 6-02
+name: Lair - Necrotalia's Chamber
+description: >
+   You are now standing in the chambers of the daemon Necrotalia.
+
+   Unfortunately here is where the game ends for now =) Normally right here we'd
+   have an epic boss fight but sadly we have no battle system built in for you 
+   to have such a fight - you'll just have to wait.
+
+   So for now I've given you a portal back to the encampment, enjoy!
+exits:
+   "north": 1-01

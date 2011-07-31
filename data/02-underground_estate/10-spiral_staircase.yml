@@ -1,0 +1,8 @@
+id: 2-10
+name: Spiral Staircase
+description: >
+   You have entered the room which contains a spiral staircase.  Other
+   than the staircase the room seems blank.
+exits:
+   "east": 2-06
+   "down": 3-01

@@ -1,0 +1,9 @@
+id: 4-04
+name: Northern area
+description: >
+   You have entered the northern area of this encampment.
+exits:
+   "north": 4-02
+   "east": 4-05
+   "south": 4-16
+   "west": 4-11

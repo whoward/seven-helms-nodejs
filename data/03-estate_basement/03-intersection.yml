@@ -1,0 +1,12 @@
+id: 3-03
+name: Intersection
+description: >
+   You have entered a small intersection with four exits. The unlocked northern 
+   door leads to a sort of lift.  The eastern door leads into a well lit room 
+   with several corpses inside. To the south is another long passageway.  
+   To the west is a passage that bends south.
+exits:
+   "north": 3-06
+   "east": 3-07
+   "south": 3-04
+   "west": 3-02

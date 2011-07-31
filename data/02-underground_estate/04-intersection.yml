@@ -1,0 +1,11 @@
+id: 2-04
+name: Intersection
+description: >
+   You look around.  This is an intersection of four paths.  To the north
+   is a small bending tunnel.  To the east and west is a dark corridor. The
+   south hallway leads into a large room.
+exits:
+   "north": 2-02
+   "east": 2-07
+   "west": 2-03
+   "south": 2-08

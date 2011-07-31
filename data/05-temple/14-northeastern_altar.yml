@@ -1,0 +1,7 @@
+id: 5-14
+name: Sanctuary - Northeastern altar
+description: >
+   You are now standing at a dead end in the short hallway.  Inserted into the
+   wall is a shrine with a red gem displayed.
+exits:
+   "south west": 5-08

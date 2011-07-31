@@ -1,0 +1,6 @@
+id: 4-14
+name: Southwestern Tower
+description: >
+   You are now standing on the southwestern watch tower
+exits:
+   "down": 4-09

@@ -1,0 +1,8 @@
+id: 2-07
+name: Junction
+description: >
+   This is a small junction of two hallways.  To the west is a long dark
+   tunnel.  To the east is the entrance to a large hall.
+exits:
+   "west": 2-04
+   "south": 2-09

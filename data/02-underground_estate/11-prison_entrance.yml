@@ -1,0 +1,11 @@
+id: 2-11
+name: Prison Entrance
+description: >
+   You enter the dark hallway, the surrounding area appears to be
+   jail cells, skeletons seem to inhabit these once empty rooms. There
+   are a total of three jail cells to the east, west and south.
+exits:
+   "north": 2-08
+   "east": 2-14
+   "south": 2-15
+   "west": 2-16

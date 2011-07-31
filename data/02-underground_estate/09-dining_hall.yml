@@ -1,0 +1,12 @@
+id: 2-09
+name: Dining Hall
+description: >
+   You are standing at the head of this hallway dominated by corpses.
+   You hear the scuttering of undead minions nearby and decide to move
+   away from this hallway quickly.  To the north is a small corridor. To
+   the west is the rest of the hall.  To the east lies a stage with a 
+   large throne on top.
+exits:
+   "north": 2-07
+   "east": 2-12
+   "west": 2-08

@@ -1,0 +1,11 @@
+id: 3-04
+name: Intersection
+description: >
+   You have entered an intersection. There are exits to all directions.
+   To the north is a long tunnel.  To the west is a large hall.  To the
+   south is another long tunnel.
+exits:
+   "north": 3-03
+   "east": 3-07
+   "south": 3-09
+   "west": 3-02

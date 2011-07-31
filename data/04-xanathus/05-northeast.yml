@@ -1,0 +1,9 @@
+id: 4-05
+name: Northeastern area
+description: >
+   You are now standing in the northeastern area
+   it is possible to access the watch tower from here
+exits:
+   "south": 4-06
+   "west": 4-04
+   "up": 4-12

@@ -1,0 +1,7 @@
+id: 1-01
+name: Encampment
+description: >
+   You sit in front of the campfire.  The dark city is quiet for now, you begin to look at your surroundings.  An old shop is off to the northeast.  There is a set of pillars surrounding a chaos star carved into the ground nearby.  The fiery pit lies to the northwest.
+exits:
+   "north east": 1-02
+   "north west": 1-03

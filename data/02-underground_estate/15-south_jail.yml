@@ -1,0 +1,6 @@
+id: 2-15
+name: Southern Jail
+description: >
+   You enter this cell which, except for a few skeletons, seems to be bare.
+exits:
+   "north": 2-11
