@@ -2,6 +2,7 @@
 global.App = 
    root: __dirname
    port: process.env.PORT || 8080
+   environment: process.env.NODE_ENV || "development"
 
 # load in our core extensions
 #require("./assets/javascripts/core_extensions.coffee")
@@ -10,11 +11,8 @@ global.App =
 game         = require("./lib/game")
 EventManager = require("./lib/event_manager").EventManager
 
-# assign the development environment if undefined
-process.env.NODE_ENV ||= "development"
-
 # log the current environment
-console.log "starting up in #{process.env.NODE_ENV} mode"
+console.log "starting up in #{App.environment} mode"
 
 # set up an event manager to manage the loading process
 startup_manager = new EventManager

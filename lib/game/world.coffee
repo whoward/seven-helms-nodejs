@@ -17,11 +17,11 @@ class World
    notifyEvent: (event) ->
       callback() for callback in (@events[event] || [])
 
+   find: (area_id) ->
+      @areas[area_id]
    
    loadData: ->
-      console.log "#### loading world data"
       fs.readFile world_file, (err, data) =>
-         console.log "#### data loaded"
          throw err if err
          
          for own id, area_data of JSON.parse(data).world

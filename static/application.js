@@ -9198,6 +9198,11 @@ function handler(event) {
       })()).length;
       this.messages.append("<li class='area-header'>" + (area.name.h()) + "</li>");
       this.appendMessage(area.description.h());
+      if (area.people.length > 1) {
+        this.coloredMessage("cyan", "There are " + area.people.length + " people here: " + (area.people.join(", ")));
+      } else {
+        this.coloredMessage("cyan", "Nobody is here except you.");
+      }
       this.coloredMessage("purple", "There are " + exit_count + " obvious exits:");
       _ref = area.exits;
       _results = [];
@@ -9268,21 +9273,17 @@ function handler(event) {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   window.KeyboardInputHandler = (function() {
     function KeyboardInputHandler() {
-      jQuery(document).bind("keydown", __bind(function(e) {
-        return this.commandKey(e.keyCode || e.which);
-      }, this));
       jQuery(document).bind("keypress", __bind(function(e) {
         var char;
         char = String.fromCharCode(e.charCode);
         if (/[\x00-\x1F]/.test(char)) {
-          console.log("was not a printable character");
-          return;
+          return this.commandKey(e.keyCode || e.which);
+        } else {
+          return this.textKey(char);
         }
-        return this.textKey(char);
       }, this));
     }
     KeyboardInputHandler.prototype.commandKey = function(keyCode) {
-      console.log("command key:", keyCode);
       switch (keyCode) {
         case 13:
           game_screen.submitInput();
@@ -9290,14 +9291,34 @@ function handler(event) {
         case 8:
           game_screen.backspace();
           break;
+        case 91:
+        case 92:
+        case 93:
+          return true;
+        case 112:
+        case 113:
+        case 114:
+        case 115:
+        case 116:
+        case 117:
+        case 118:
+        case 119:
+        case 120:
+        case 121:
+        case 122:
+        case 123:
+          return true;
+        case 144:
+        case 145:
+          return true;
         default:
-          return false;
+          return true;
       }
       return false;
     };
     KeyboardInputHandler.prototype.textKey = function(char) {
-      console.log("text key:", char);
-      return game_screen.appendInput(char);
+      game_screen.appendInput(char);
+      return false;
     };
     return KeyboardInputHandler;
   })();

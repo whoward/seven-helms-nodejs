@@ -8,20 +8,20 @@ class Client
       @server = server
 
       @username = ""
-      @area_id = "1-01"
+      @area_id = ""
 
       @connection.emit "message", "Please enter a user name ..."
 
       @connection.on "message", (message) =>
-         this.processMessage(message)
+         this.process_message(message)
 
       @connection.on "command", (command, params) =>
-         this.processCommand(command, params)
+         this.process_command(command, params)
 
       @connection.on "disconnect", =>
-         this.processDisconnect()
+         this.process_disconnect()
 
-   setUsername: (username) ->
+   set_username: (username) ->
       if @server.user_list().indexOf(username) >= 0
          @connection.emit "message", "Sorry, that username is already in use"
 
@@ -37,39 +37,62 @@ class Client
       else
          @connection.emit "message", "Please only use letters, numbers, underscores (_) and hyphens (-)"
 
-   setArea: (area_id) ->
-      area = World.areas[area_id]
+   get_area: ->
+      World.find(@area_id)
 
-      throw "area #{area_id} does not exist" unless area?
+   set_area: (next_area) ->
+      current_area = this.get_area()
 
-      @area_id = area_id
+      @area_id = next_area.id
 
-      @connection.emit "area", area.to_json()
+      if current_area
+         current_area.remove_player(this)
+
+      next_area.add_player(this)
+
+      @connection.emit "area", next_area.to_json()
 
    move: (direction) ->
-      area = World.areas[@area_id]
+      current_area = this.get_area()
+      next_area = current_area.area_for_direction(direction)
 
-      if not area.exits[direction]
+      if not next_area
          @connection.emit "error", "You cannot go in that direction"
          return
 
-      this.setArea area.exits[direction]
+      this.set_area(next_area)
 
-   processMessage: (message) ->
+      if current_area
+         console.log "notfy exiting area of departure"
+         current_area.notify_exit(this, direction)
+         next_area.notify_entrance(this, current_area, direction)
+      
+   notify_entrance: (player, direction) ->
+      console.log "notifying #{@username} of #{player.username} entrance from #{direction}"
+      if direction
+         @connection.emit "message", "#{player.username} has arrived from the #{direction} direction"
+      else
+         @connection.emit "message", "#{player.username} has entered the area"
+
+   notify_exit: (player, direction) ->
+      console.log "notfiying #{@username} of #{player.username} exit to #{direction}"
+      @connection.emit "message", "#{player.username} has left the area in the #{direction} direction"
+
+   process_message: (message) ->
       if not @username
-         this.setUsername(message)
-         this.setArea("1-01")
+         this.set_username(message)
+         this.set_area(World.find("1-01"))
       else
          @server.broadcast "#{@username}: #{message}"
 
-   processCommand: (command, params) ->
+   process_command: (command, params) ->
       switch command
          when "pm" then @server.pm params.username, "#{@username} says: #{params.message}"
-         when "rename" then this.setUsername(params.username)
+         when "rename" then this.set_username(params.username)
          when "list" then @connection.emit "list", @server.user_list()
          when "go" then this.move params.direction
 
-   processDisconnect: ->
+   process_disconnect: ->
       @server.broadcast "#{@username} has left the zone."
       @server.removeClient(this)
 

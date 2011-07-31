@@ -1,17 +1,14 @@
 
 class window.KeyboardInputHandler
    constructor: ->
-      jQuery(document).bind "keydown", (e) =>
-         this.commandKey(e.keyCode || e.which)
-
       jQuery(document).bind "keypress", (e) =>
          char = String.fromCharCode(e.charCode)
 
          # check if the given character is a non printable character
          if /[\x00-\x1F]/.test(char)
-            return
-
-         this.textKey(char)
+            return this.commandKey(e.keyCode || e.which)
+         else
+            return this.textKey(char)
 
 
    commandKey: (keyCode) ->
@@ -34,9 +31,10 @@ class window.KeyboardInputHandler
          when 144, 145
             return true
 
-         else return false
+         else return true
       
       return false
 
    textKey: (char) ->
       game_screen.appendInput(char)
+      return false

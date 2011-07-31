@@ -92,6 +92,11 @@ class window.GameScreen
       
       this.appendMessage area.description.h()
 
+      if area.people.length > 1
+         this.coloredMessage "cyan", "There are #{area.people.length} people here: #{area.people.join(", ")}"
+      else
+         this.coloredMessage "cyan", "Nobody is here except you."
+
       this.coloredMessage "purple", "There are #{exit_count} obvious exits:"
 
       for dir, name of area.exits
