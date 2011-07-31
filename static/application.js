@@ -9274,10 +9274,15 @@ function handler(event) {
       jQuery(document).bind("keypress", __bind(function(e) {
         var char;
         char = String.fromCharCode(e.charCode);
+        if (/[\x00-\x1F]/.test(char)) {
+          console.log("was not a printable character");
+          return;
+        }
         return this.textKey(char);
       }, this));
     }
     KeyboardInputHandler.prototype.commandKey = function(keyCode) {
+      console.log("command key:", keyCode);
       switch (keyCode) {
         case 13:
           game_screen.submitInput();
@@ -9286,11 +9291,12 @@ function handler(event) {
           game_screen.backspace();
           break;
         default:
-          return true;
+          return false;
       }
       return false;
     };
     KeyboardInputHandler.prototype.textKey = function(char) {
+      console.log("text key:", char);
       return game_screen.appendInput(char);
     };
     return KeyboardInputHandler;

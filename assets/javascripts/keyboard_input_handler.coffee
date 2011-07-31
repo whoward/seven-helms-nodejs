@@ -6,6 +6,11 @@ class window.KeyboardInputHandler
 
       jQuery(document).bind "keypress", (e) =>
          char = String.fromCharCode(e.charCode)
+
+         # check if the given character is a non printable character
+         if /[\x00-\x1F]/.test(char)
+            return
+
          this.textKey(char)
 
 
@@ -17,7 +22,19 @@ class window.KeyboardInputHandler
          # backspace key
          when 8 then game_screen.backspace()
 
-         else return true
+         # meta keys
+         when 91, 92, 93
+            return true
+
+         # function keys (use default behavior)
+         when 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123
+            return true
+
+         # caps lock, scroll lock
+         when 144, 145
+            return true
+
+         else return false
       
       return false
 
