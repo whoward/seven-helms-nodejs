@@ -12,27 +12,12 @@ The app is currently being run at http://sevenhelms.hecm.ca/
 
 1. Install Node.JS: [here](https://github.com/joyent/node/wiki/Installation)
 2. Install Node Package Manager: [here](http://npmjs.org/)
-3. Install Node Packages: 
-
-``` bash
-   npm install .
-```
-
-4. Install Ruby-based build tools:
-
-```bash
-   apt-get install rubygems
-   gem install bundler
-   bundle install
-```
-
-5. Compile everything: 
-
-``` bash
-   rake compile
-```
+3. Install Node Packages: ``` npm install . ```
+4. Install Ruby-based build tools: ``` apt-get install rubygems; gem install bundler; bundle install ```
+5. Compile everything: ``` rake compile ```
 
 # How to run
 
-Development: "coffee server.coffee"
-Production: "node boot-production.js"
+Development: ```coffee server.coffee```
+
+Production: ```node boot-production.js```
