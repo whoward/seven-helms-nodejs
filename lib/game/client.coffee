@@ -63,19 +63,16 @@ class Client
       this.set_area(next_area)
 
       if current_area
-         console.log "notfy exiting area of departure"
          current_area.notify_exit(this, direction)
          next_area.notify_entrance(this, current_area, direction)
       
    notify_entrance: (player, direction) ->
-      console.log "notifying #{@username} of #{player.username} entrance from #{direction}"
       if direction
          @connection.emit "message", "#{player.username} has arrived from the #{direction} direction"
       else
          @connection.emit "message", "#{player.username} has entered the area"
 
    notify_exit: (player, direction) ->
-      console.log "notfiying #{@username} of #{player.username} exit to #{direction}"
       @connection.emit "message", "#{player.username} has left the area in the #{direction} direction"
 
    process_message: (message) ->
