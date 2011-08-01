@@ -19,11 +19,6 @@ class Server
 
       @socket_server = io.listen(@http_server)
 
-      @socket_server.configure "production", =>
-         console.log "removing websocket support for production =("
-         @socket_server.set "transports", ["xhr-polling"]
-         @socket_server.set "close timeout", 300
-
       @socket_server.sockets.on "connection", (connection) =>
          @clients.push new Client(connection, this)
 
