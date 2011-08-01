@@ -9273,6 +9273,13 @@ function handler(event) {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   window.KeyboardInputHandler = (function() {
     function KeyboardInputHandler() {
+      jQuery(document).bind("keydown", __bind(function(e) {
+        if (e.keyCode === 8 || e.which === 8) {
+          game_screen.backspace();
+          return false;
+        }
+        return true;
+      }, this));
       jQuery(document).bind("keypress", __bind(function(e) {
         var char;
         char = String.fromCharCode(e.charCode);
@@ -9312,7 +9319,7 @@ function handler(event) {
         case 145:
           return true;
         default:
-          return true;
+          return false;
       }
       return false;
     };

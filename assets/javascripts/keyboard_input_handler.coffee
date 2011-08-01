@@ -1,6 +1,13 @@
 
 class window.KeyboardInputHandler
    constructor: ->
+      jQuery(document).bind "keydown", (e) =>
+         if e.keyCode is 8 or e.which is 8
+            game_screen.backspace()
+            return false         
+
+         return true
+
       jQuery(document).bind "keypress", (e) =>
          char = String.fromCharCode(e.charCode)
 
@@ -31,7 +38,7 @@ class window.KeyboardInputHandler
          when 144, 145
             return true
 
-         else return true
+         else return false
       
       return false
 
