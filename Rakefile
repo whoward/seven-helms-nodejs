@@ -36,9 +36,15 @@ namespace :compile do
 
       filenames = {}
 
+      # run through all the packages defined in the assets yaml file, concat
+      # them all together into a big string then take the SHA1 hash of it to
+      # generate the filename.
       packages.each do |package, files|
          puts "packaging #{package}"
 
+         # concatenate all the files together, compiling them into the proper
+         # *.js or *.css source as necessary (for CoffeeScript and Sass) 
+         # respectively
          content = files.inject("") do |output, file|
             filename = File.expand_path("assets/#{file}", File.dirname(__FILE__))
 
@@ -58,14 +64,18 @@ namespace :compile do
             end
          end
 
+         # calculate the SHA1 hash of the contents of the file and join them
+         # up to make the output filename, we append the hash to deal with issues
+         # associated with client side caching (incidentially this is what 
+         # Rails 3.1 does as well)
          hash = Digest::SHA1.hexdigest(content)
 
          extension = File.extname(package)
          basename = File.basename(package, extension)
          
-
          filenames[package] = "#{basename}-#{hash}#{extension}"
 
+         # finally write the contents out to disk under the static/ directory
          full_path = File.expand_path("static/#{filenames[package]}", File.dirname(__FILE__))
 
          puts "output to: #{filenames[package]}"
@@ -75,6 +85,8 @@ namespace :compile do
          puts ""
       end
 
+      # and now that we've generated the assets, compile the ERB index page to
+      # the static/ directory as well
       puts "writing index.html"
       
       input_file = File.expand_path("assets/index.html.erb", File.dirname(__FILE__))
