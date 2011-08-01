@@ -90,8 +90,14 @@ class Client
          when "go" then this.move params.direction
 
    process_disconnect: ->
+      current_area = this.get_area()
+      if current_area
+         current_area.remove_player(this)
+
       @server.broadcast "#{@username} has left the zone."
+
       @server.removeClient(this)
+
 
 
 
