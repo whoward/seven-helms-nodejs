@@ -6,6 +6,7 @@
       "node-static": "0.5.7",
       "socket.io": "0.7.7",
       "cradle": "0.5.5",
-      "hashlib": "1.0.1"
+      "hashlib": "1.0.1",
+      "underscore": "1.1.7"
    }
 }
