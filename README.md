@@ -9,10 +9,11 @@ The server and client are written mostly in CoffeeScript, since I generally like
 # How to Install
 
 1. Install Node.JS: [here](https://github.com/joyent/node/wiki/Installation)
-2. Install Node Package Manager: [here](http://npmjs.org/)
-3. Install Node Packages: ``` npm install . ```
-4. Install Ruby-based build tools: ``` apt-get install rubygems; gem install bundler; bundle install ```
-5. Compile everything: ``` rake compile ```
+2. Install CouchDB: ``` apt-get install couchdb ```
+3. Install Node Package Manager: [here](http://npmjs.org/)
+4. Install Node Packages: ``` npm install . ```
+5. Install Ruby-based build tools: ``` apt-get install rubygems; gem install bundler; bundle install ```
+6. Compile everything: ``` rake compile ```
 
 # How to run
 
