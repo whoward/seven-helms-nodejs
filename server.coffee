@@ -1,7 +1,7 @@
 # set up  some constants for use in the global scope
 global.App = 
    root: __dirname
-   port: process.env.PORT || 8080
+   port: process.env.PORT || 3000
    environment: process.env.NODE_ENV || "development"
    design_documents: require("./db/design_documents.coffee").DesignDocuments
 
