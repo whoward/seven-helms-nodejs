@@ -79,3 +79,64 @@ describe 'Class', ->
       expect(MyModule.__mixed).toHaveBeenCalledWith(Array)
 
       expect(Array.prototype.hello).toBeAFunction()
+
+   it "should add to the modules list when mixing", ->
+      class MyModule
+         hello: ->
+            # foo
+
+      class MyClass
+         foo: ->
+            # foo
+
+      expect(MyClass.__modules).toBeUndefined()
+
+      Class.mixin(MyClass, MyModule)
+
+      expect(MyClass.__modules).toBeDefined()
+
+      expect(MyClass.__modules[0]).toBe(MyModule)
+
+   it "should not replace the modules list when mixing", ->
+      class MyModuleA
+         hello: ->
+            # hello
+
+      class MyModuleB
+         world: ->
+            # world
+      
+      class MyClass
+         foo: ->
+            # foo
+
+      Class.mixin MyClass, MyModuleA
+      Class.mixin MyClass, MyModuleB
+
+      expect(MyClass.__modules.length).toEqual(2)
+
+   it "should not mix in the same module multiple times", ->
+      class MyModule
+         hello: ->
+            # hello
+
+      MyModule.__mixing = ->
+         # mixing
+      
+      MyModule.__mixed = ->
+         # mixed
+      
+      class MyClass
+         foo: ->
+            # foo
+
+      spyOn MyModule, '__mixing'
+      spyOn MyModule, '__mixed'
+
+      Class.mixin MyClass, MyModule
+      Class.mixin MyClass, MyModule
+
+      expect(MyClass.__modules.length).toEqual(1)
+
+      expect(MyModule.__mixing.callCount).toEqual(1)
+      expect(MyModule.__mixed.callCount).toEqual(1)

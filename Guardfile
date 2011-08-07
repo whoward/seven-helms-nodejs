@@ -35,7 +35,7 @@ def run_jasmine_suite
 
    puts result_string
 
-   icon = failures.to_i == 0 ? :success : :failure
+   icon = failures.to_i == 0 ? :success : :failed
 
    notify :head => "Jasmine Test Results", :body => result_string, :icon => icon
 end

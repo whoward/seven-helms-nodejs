@@ -24,6 +24,13 @@ exports.getGlobalObject = ->
    @param {Function} mixin
 ###
 exports.mixin = (base, mixin) ->
+   base.__modules ?= []
+
+   if base.__modules.indexOf(mixin) >= 0
+      return
+   else
+      base.__modules.push(mixin)
+
    if "function" is typeof mixin.__mixing
       mixin.__mixing base
    
