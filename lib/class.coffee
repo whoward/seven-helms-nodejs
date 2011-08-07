@@ -12,27 +12,38 @@ exports.getGlobalObject = ->
   `function(){ return this; }.call(null)`
 
 ###
-   Mixes all methods from the givingClass's prototype into the receivingClass's
+   Mixes all methods from the mixin's prototype into the base's
    prototype.  
 
-   Callbacks can be defined on the givingClass to allow it to perform other 
+   Callbacks can be defined on the mixin to allow it to perform other 
    changes as necessary.  The callbacks must be named __mixing or __mixed 
    (before and after callbacks respectively) and must be defined on the class 
    level (not on the prototype).
 
-   @param {Function} receivingClass
-   @param {Function} givingClass
+   @param {Function} base
+   @param {Function} mixin
 ###
-exports.mixin = (receivingClass, givingClass) ->
-   if "function" is typeof givingClass.__mixing
-      givingClass.__mixing receivingClass
+exports.mixin = (base, mixin) ->
+   if "function" is typeof mixin.__mixing
+      mixin.__mixing base
    
-   methods = exports.instanceMethods givingClass.prototype
+   methods = exports.instanceMethods mixin.prototype
 
-   receivingClass.prototype[method] = givingClass.protoype[method] for method in methods
+   base.prototype[fn] = mixin.prototype[fn] for fn in methods
 
-   if "function" is typeof givingClass.__mixed
-      givingClass.__mixed receivingClass
+   if "function" is typeof mixin.__mixed
+      mixin.__mixed base
+
+###
+   Returns an array of all the instance variables
+   @param {Object} object
+###
+exports.instanceVariables = (object) ->
+   result = []
+   for own key, val of object
+      result.push(key) if "function" isnt typeof val
+   result
+   
 
 ###
    Returns an array of all the function names on an object
@@ -42,9 +53,40 @@ exports.instanceMethods = (object) ->
    result = []
    proto = if object.constructor is Function then object else object.constructor.prototype
 
-   result = for own property, value of proto
-      if "function" is typeof value then value else null
+   for own key, value of proto
+      result.push(key) if "function" is typeof value
 
-   result.compact()
-};
+   result
 
+###
+   Returns a deep copy of the given object. Please don't contain recursive
+   pointers - it would probably be very bad if you did. (infinite loop)
+   @param {Object} object
+###
+exports.duplicate = (object) ->
+  newObj = if (object instanceof Array) then [] else {}
+  for i of object
+    if object[i] and typeof object[i] == "object"
+      newObj[i] = exports.duplicate(object[i])
+    else
+      newObj[i] = object[i]
+  newObj
+
+###
+   Resolves the given string path and returns the object it references to.
+   This is better than eval because nothing is actually evaluated, only looked
+   up.
+   @param {String} path
+   @param {Object} object
+###
+exports.resolvePath = (path, object) ->
+  object = object or exports.getGlobalObject()
+  components = path.split(".")
+  current = object
+  
+  for component in components
+    current = current[component]
+    if "undefined" is typeof current
+      throw "component '#{component}' in path '#{path}' is not defined" 
+
+  current
