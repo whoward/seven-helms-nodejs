@@ -1,6 +1,5 @@
 Class = require '../lib/class.coffee'
 
-
 describe 'Class', ->
    it "should provide access to the global object", ->
       expected = global
@@ -140,3 +139,25 @@ describe 'Class', ->
 
       expect(MyModule.__mixing.callCount).toEqual(1)
       expect(MyModule.__mixed.callCount).toEqual(1)
+
+   it "should provide a function to call mixin 'constructors'", ->
+      class MyModule
+         hello: ->
+            # hello
+      
+      MyModule.__construct = ->
+         # construct
+
+      class MyClass
+         constructor: ->
+            Class.constructMixins(this)
+
+      Class.mixin MyClass, MyModule
+
+      spyOn MyModule, '__construct'
+
+      expect(MyModule.__construct).not.toHaveBeenCalled()
+
+      instance = new MyClass()
+
+      expect(MyModule.__construct).toHaveBeenCalledWith(instance)

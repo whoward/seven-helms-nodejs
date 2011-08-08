@@ -9,7 +9,7 @@
    @author Nicholas C. Zakas
 ###
 exports.getGlobalObject = ->
-  `function(){ return this; }.call(null)`
+  (-> return this).call(null)
 
 ###
    Mixes all methods from the mixin's prototype into the base's
@@ -19,6 +19,10 @@ exports.getGlobalObject = ->
    changes as necessary.  The callbacks must be named __mixing or __mixed 
    (before and after callbacks respectively) and must be defined on the class 
    level (not on the prototype).
+
+   This method will not mix a module in that has already been mixed in (mixed
+   modules are tracked with the class variable __mixing, which is added the
+   first time it is called)
 
    @param {Function} base
    @param {Function} mixin
@@ -40,6 +44,16 @@ exports.mixin = (base, mixin) ->
 
    if "function" is typeof mixin.__mixed
       mixin.__mixed base
+
+###
+  Intended to be called in the constructor of a mixed class, calls constructors
+  of mixed in modules if defined.
+###
+exports.constructMixins = (instance) ->
+  modules = (instance.constructor.__modules || [])
+
+  for module in modules
+    module.__construct(instance) if "function" is typeof module.__construct
 
 ###
    Returns an array of all the instance variables

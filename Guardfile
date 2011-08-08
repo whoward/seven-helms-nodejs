@@ -25,7 +25,9 @@ def run_jasmine_suite
 
    regex = /(\d+) test[s]?, (\d+) assertion[s]?, (\d+) failure[s]?/
 
-   result = `/usr/bin/env jasmine-node --coffee spec`.split(/\n/).select {|x| x =~ regex }.first
+   output = `/usr/bin/env jasmine-node --coffee spec`
+
+   result = output.split(/\n/).select {|x| x =~ regex }.first
 
    puts "couldn't parse result =(" if not result
 
@@ -33,7 +35,11 @@ def run_jasmine_suite
 
    result_string = "#{tests} tests, #{assertions} assertions, #{failures} failures"
 
-   puts result_string
+   if failures.to_i == 0 and $?.success?
+      puts "\033[0;32m" + result_string + "\033[0;39m"
+   else
+      puts output
+   end
 
    icon = failures.to_i == 0 ? :success : :failed
 
