@@ -50,7 +50,17 @@ describe "Couch Model", ->
       expect(User.__modules).toContain(Model)
 
    it "should define all attributes given when designing", ->
-      expect(def.getAttributeNames()).toEqual ["id", "first_name", "last_name", "full_name"]
+      names = def.getAttributeNames()
+
+      expect(names.length).toBe 6
+
+      expect(names).toInclude "_id"
+      expect(names).toInclude "_ref"
+      expect(names).toInclude "id"
+      expect(names).toInclude "first_name"
+      expect(names).toInclude "last_name"
+      expect(names).toInclude "full_name"
+      
       expect(def.attributes.id.saveable).toBe false
 
    it "should define all validations when designing", ->

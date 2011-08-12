@@ -38,6 +38,17 @@ CouchModel.design = (options) ->
       if "object" is typeof val
          ValidatableModel.validate(new_model, key, val)
 
+   # add the magic _id and _ref variable definitions if not defined
+   definition = Model.getModelDefinition(new_model)
+
+   attributes = definition.getAttributeNames()
+
+   if attributes.indexOf("_id") is -1
+      Model.attribute(new_model, "_id")
+
+   if attributes.indexOf("_ref") is -1
+      Model.attribute(new_model, "_ref")
+
    return new_model
 
 exports.CouchModel = CouchModel
