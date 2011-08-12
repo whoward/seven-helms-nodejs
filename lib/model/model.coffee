@@ -115,10 +115,13 @@ Model.__construct = (model) ->
    if dependents
       model.__computedAttributeObserver = new ComputedAttributeObserver(model, dependents)
 
+Model.getModelDefinition = (model) ->
+   return Model.__definitions[model] ?= new ModelDefinition()
+
 Model.attribute = (model, attribute, options) ->
-   (Model.__definitions[model] ?= new ModelDefinition()).defineAttribute(attribute, options)
+   Model.getModelDefinition(model).defineAttribute(attribute, options)
 
 Model.computedAttribute = (model, attribute, options) ->
-   (Model.__definitions[model] ?= new ModelDefinition()).defineComputedAttribute(attribute, options)
+   Model.getModelDefinition(model).defineComputedAttribute(attribute, options)
 
 exports.Model = Model

@@ -27,6 +27,8 @@ def run_jasmine_suite
 
    output = `/usr/bin/env jasmine-node --coffee spec`
 
+   successful = $?.success?
+
    result = output.split(/\n/).select {|x| x =~ regex }.first
 
    puts "couldn't parse result =(" if not result
@@ -35,13 +37,13 @@ def run_jasmine_suite
 
    result_string = "#{tests} tests, #{assertions} assertions, #{failures} failures"
 
-   if failures.to_i == 0 and $?.success?
+   if failures.to_i == 0 and successful
       puts "\033[0;32m" + result_string + "\033[0;39m"
    else
       puts output
    end
 
-   icon = failures.to_i == 0 ? :success : :failed
+   icon = (failures.to_i == 0 and successful) ? :success : :failed
 
    notify :head => "Jasmine Test Results", :body => result_string, :icon => icon
 end
