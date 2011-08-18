@@ -5,12 +5,20 @@ global.App =
    environment: process.env.NODE_ENV || "development"
    design_documents: require("./db/design_documents.coffee").DesignDocuments
 
+# load in some stuff
+EventManager = require("./lib/event_manager").EventManager
+glob = require("glob")
+
 # load in our core extensions
 #require("./assets/javascripts/core_extensions.coffee")
 
-# load in libraries used in this server
+# load up all of the models under the "db" directory, they'll in turn register
+# themselves as models and create appropriate design documents
+glob.globSync("db/*.{coffee,js}").forEach (file) ->
+   require("./#{file}")
+
+# load in systems used in this server
 game         = require("./lib/game")
-EventManager = require("./lib/event_manager").EventManager
 couchdb      = require("./lib/database.coffee").couchdb
 
 # log the current environment
@@ -30,3 +38,6 @@ startup_manager.complete ->
    server = new game.Server
 
    console.log("server started, view at http://127.0.0.1:#{server.port}/")
+
+# and commence the whole process
+couchdb.initialize()

@@ -1,27 +1,52 @@
-Model = require("./model").Model
 Digest = require("hashlib")
+CouchModel = require("../lib/couch_model").CouchModel
 
-class User extends Model
-   constructor: (params) ->
-      super(params)
+exports.User = CouchModel.design "user",
+   design_version: 5
 
-Model.computedAttribute User, "id",
-   save: true
-   dependents: ['username']
-   getter: ->
-      "user-#{this.get("username")}"
+   views:
+      all:
+         map: (doc) ->
+            return unless doc.type is "user"
+            emit(doc.username, doc)
 
-Model.attribute User, "username",
-   save: true
+      credentials:
+         map: (doc) ->
+            return unless doc.type is "user"
+            emit("#{doc.username}-#{doc.hashed_password}", doc)
 
-Model.attribute User, "password",
-   save: false
+   attributes: [
+      {
+         name: "username",
+         save: true
+      },
+      {
+         name: "hashed_password",
+         save: true
+      }
+   ]
 
-Model.computedAttribute User, "hashed_password",
-   save: true
-   dependents: ['password', 'username']
-   getter: ->
-      # we'll use the username as our password salt and SHA1 the whole thing
-      Digest.sha1(this.get("password") + this.get("username"))
+   computed_attributes: [
+      {
+         name: "_id"
+         save: true
+         dependents: ["username"]
+         getter: ->
+            "user-#{@username}"
+      },
+      {
+         name: "password"
+         save: false
+         dependents: ["username"]
+         setter: (password) ->
+            @hashed_password = Digest.sha1(password + @username)
+      }
+   ]
 
-exports.User = User
+   validations:
+      "username":
+         presence: true
+         format: /^[A-Za-z0-9\_\-]+$/
+
+      "hashed_password":
+         presence: true

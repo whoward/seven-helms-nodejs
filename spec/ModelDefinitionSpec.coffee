@@ -27,6 +27,17 @@ describe 'ModelDefinition', ->
 
       expect(-> def.defineAttribute "MyAttr").toThrow("already defined: MyAttr")
 
+   it "should provide a method to retrieve an attributes definition, regardless to its type", ->
+      def.defineAttribute "Foo",
+         save: true
+         readable: true
+         writeable: false
+
+      expect(def.getAttributeDefinition("Foo")).toEqual
+         save: true
+         readable: true
+         writeable: false
+   
    it "should provide a method to see if an attribute is already defined", ->
       def.defineAttribute "Foo"
 

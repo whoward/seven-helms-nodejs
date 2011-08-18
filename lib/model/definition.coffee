@@ -27,8 +27,11 @@ class exports.ModelDefinition
 
       @computedAttributes[attr] = options
 
+   getAttributeDefinition: (attr) ->
+      @attributes[attr] || @computedAttributes[attr]
+
    isAttributeDefined: (attr) ->
-      !!(@attributes[attr] || @computedAttributes[attr])
+      !!(this.getAttributeDefinition(attr))
 
    getAttributeNames: ->
       result = []

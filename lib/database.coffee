@@ -2,19 +2,15 @@ cradle       = require("cradle")
 EventEmitter = require("events").EventEmitter
 
 class Database extends EventEmitter
-   constructor: ->
+   initialize: ->
       @database_name = "seven-helms-#{App.environment}"
+
+      @design_document_is_stale = {}
 
       @con = @connection = new (cradle.Connection)()
 
       @db = @con.database(@database_name)
 
-      @design_document_is_stale = {}
-
-      this.initialize()
-
-# private
-   initialize: ->
       # start by checking that the database exists already, if not create it
       @db.exists (err, database_exists) =>
          throw err if err
@@ -24,7 +20,22 @@ class Database extends EventEmitter
          else
             this.database_created()
 
+   get: ->
+      @db.get.apply(@db, arguments)
    
+   view: ->
+      @db.view.apply(@db, arguments)
+
+   save: ->
+      @db.save.apply(@db, arguments)
+
+   merge: ->
+      @db.merge.apply(@db, arguments)
+
+   remove: ->
+      @db.remove.apply(@db, arguments)
+
+# private   
    create_database: ->
       console.log "creating couchdb database: #{@database_name}"
       @db.create (err, result) =>
