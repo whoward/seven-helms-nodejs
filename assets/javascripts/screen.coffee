@@ -1,4 +1,4 @@
-CommandRegex = /^\/([A-Za-z]+)(\s+(.+))?/
+
 
 class window.GameScreen
    constructor: (root) ->
@@ -44,51 +44,19 @@ class window.GameScreen
       this.setInputText @input_text + chars
 
    submitInput: ->
-      if match = CommandRegex.exec(@input_text)
-         this.processCommand(match[1], match[3])
-      else if @input_text[0] is "/"
-         this.unknownCommand "Sorry, I don't understand what kind of command you're trying to do"
-      else
-         connection.message(@input_text)
-      
+      input_parser.process_input(@input_text)      
       this.clearInput()
+
+   privateMessageReceived: (sender, message) ->
+      this.appendMessage "<span class='pm'>From (<a href='#'>#{sender}</a>): #{message}</span>".safe()
+      
+      @messages.children("li:last a").click =>
+         console.log "clicked pm link"
+         this.setInputText "/say #{sender} "
+         false
 
    backspace: ->
       this.setInputText @input_text[0..-2]
-
-   processCommand: (command, text) ->
-      switch command
-         when "login"
-            [username, password] = text.split(/\s+/g)
-            connection.login(username, password)
-
-         when "register"
-            [username, password] = text.split(/\s+/g)
-            connection.register(username, password)
-
-         when "say"
-            [username, message] = (/^([A-Za-z0-9\_\-]+)\s+(.+)/.exec(text) || ["", "", ""])[1..]
-            if username and message
-               connection.pm username, message
-               this.coloredMessage "blue", "to #{username}: #{message}"
-            else
-               this.unknownCommand "usage: /say <username> <message>".html_escape()
-
-         when "go" then connection.go(text)
-
-         when "list" then connection.list()
-
-         when "rename" then connection.rename(text)
-
-         when "help" then this.printHelp()
-
-         else this.unknownCommand "Sorry, I don't understand the command \"#{command}\""
-
-   printHelp: ->
-      this.coloredMessage "golden-yellow", "commands: /login /register /say /rename /help /list /go"
-
-   unknownCommand: (message) ->
-      this.coloredMessage "purple", message
 
    coloredMessage: (colorClass, message) ->
       this.appendMessage "<span class='bold #{colorClass.h()}'>#{message.h()}</span>".safe()

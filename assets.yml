@@ -9,6 +9,7 @@ application.js:
    - javascripts/screen.coffee
    - javascripts/connection.coffee
    - javascripts/keyboard_input_handler.coffee
+   - javascripts/input_parser.coffee
 
    - javascripts/application.coffee
 

@@ -12,7 +12,7 @@ class Client
       @username = ""
       @area_id = ""
 
-      @logged_in = false
+      @user = null
 
       # display the connection message (currently hardcoded, later will be customizable)
       @connection.emit "message", "Welcome to Seven Helms, please log in or register a new account."
@@ -112,11 +112,9 @@ class Client
             @connection.emit "error", "Login error: no matching credentials for the username/password you provided"
          else
             @connection.emit "message", "You have successfully logged in, welcome!"
-            user = users[0]
+            @user = users[0]
 
-            @logged_in = true
-
-            this.set_username(user.username)
+            this.set_username(@user.username)
             this.set_area(World.find("1-01"))
 
    ###
@@ -174,7 +172,7 @@ class Client
       yet logged in then we display an error message and do nothing else.
    ###
    process_message: (message) ->
-      if not @logged_in
+      if not @user
          this.not_logged_in()
       else
          @server.broadcast "#{@username}: #{message}"
@@ -185,8 +183,12 @@ class Client
       not attempting to login and register an error message will be displayed.
    ###
    process_command: (command, params) ->
+      if not @user and command isnt "login" and command isnt "register"
+         this.not_logged_in()
+         return
+      
       switch command
-         when "pm" then @server.pm params.username, "#{@username} says: #{params.message}"
+         when "pm" then @server.pm this, params.username, params.message
          when "rename" then this.set_username(params.username)
          when "list" then @connection.emit "list", @server.user_list()
          when "go" then this.move params.direction

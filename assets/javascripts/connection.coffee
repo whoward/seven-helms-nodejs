@@ -9,8 +9,8 @@ class window.Connection
       @socket.on "message", (message) ->
          game_screen.appendMessage(message)
 
-      @socket.on "pm", (message) ->
-         game_screen.coloredMessage "blue", message
+      @socket.on "pm", (sender, message) ->
+         game_screen.privateMessageReceived sender, message
 
       @socket.on "list", (playerList) ->
          game_screen.coloredMessage "blue", "Users: #{playerList.join(", ")}"

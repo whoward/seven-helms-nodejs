@@ -40,17 +40,18 @@ class Server
 
       result
 
-   pm: (username, message) ->
-      client = null
+   pm: (sender, recipient_name, message) ->
+      recipient = null
 
-      for c in @clients
-         if c.username == username
-            client = c
+      for client in @clients
+         if client.user.username is recipient_name
+            recipient = client
             break
 
-      return if not client?
-
-      client.connection.emit "pm", message
+      if recipient
+         recipient.connection.emit "pm", sender.username, message
+      else
+         sender.connection.emit "error", "No logged in user found named '#{recipient_name}'"
 
    removeClient: (client) ->
       index = @clients.indexOf(client)
