@@ -32,14 +32,12 @@ class window.InputParser
 
          when "list" then connection.list()
 
-         when "rename" then connection.rename(text)
-
          when "help" then this.printHelp()
 
          else this.unknownCommand "Sorry, I don't understand the command \"#{command}\""
 
    printHelp: ->
-      game_screen.coloredMessage "golden-yellow", "commands: /login /register /say /rename /help /list /go"
+      game_screen.coloredMessage "golden-yellow", "commands: /login /register /say /help /list /go"
 
    unknownCommand: (message) ->
       game_screen.coloredMessage "purple", message

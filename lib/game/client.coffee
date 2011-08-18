@@ -9,7 +9,6 @@ class Client
       @connection = connection
       @server = server
 
-      @username = ""
       @area_id = ""
 
       @user = null
@@ -29,21 +28,12 @@ class Client
       @connection.on "disconnect", =>
          this.process_disconnect()
 
-   set_username: (username) ->
-      if @server.user_list().indexOf(username) >= 0
-         @connection.emit "message", "Sorry, that username is already in use"
-
-      else if UsernameRegex.test(username || "")
-         # if already defined then this is a rename
-         if @username
-            @server.broadcast "#{@username} is now known as #{username}"
+      # since its used so often define a getter for the username
+      this.__defineGetter__ "username", ->
+         if @user and @user.username
+            return @user.username
          else
-            @server.broadcast "#{username} has entered the zone."
-
-         @username = username
-
-      else
-         @connection.emit "message", "Please only use letters, numbers, underscores (_) and hyphens (-)"
+            return null
 
    ###
       Retrieves the area the player is currently placed in
@@ -113,8 +103,6 @@ class Client
          else
             @connection.emit "message", "You have successfully logged in, welcome!"
             @user = users[0]
-
-            this.set_username(@user.username)
             this.set_area(World.find("1-01"))
 
    ###
@@ -189,7 +177,6 @@ class Client
       
       switch command
          when "pm" then @server.pm this, params.username, params.message
-         when "rename" then this.set_username(params.username)
          when "list" then @connection.emit "list", @server.user_list()
          when "go" then this.move params.direction
          when "login" then this.login(params)

@@ -45,10 +45,6 @@ class window.Connection
          username: name
          message: msg
 
-   rename: (name) ->
-      this.command "rename"
-         username: name
-
    list: ->
       this.command "list"
 
