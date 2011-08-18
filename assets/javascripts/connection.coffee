@@ -30,6 +30,16 @@ class window.Connection
    command: (command, params) ->
       @socket.emit "command", command, params
 
+   login: (name, password) ->
+      this.command "login"
+         username: name
+         password: md5(password)
+
+   register: (name, password) ->
+      this.command "register"
+         username: name
+         password: md5(password)
+
    pm: (name, msg) ->
       this.command "pm"
          username: name

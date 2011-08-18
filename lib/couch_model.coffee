@@ -89,8 +89,8 @@ CouchModel.design = (type, options) ->
          callback.call(null, new new_model(doc))
 
    # add a function to retrieve all models in a view
-   new_model.view = (view, callback) ->
-      couchdb.view "#{type}/#{view}", (err, docs) ->
+   new_model.view = (view, params, callback) ->
+      couchdb.view "#{type}/#{view}", params, (err, docs) ->
          throw err if err
 
          models = (new new_model(doc.value) for doc in docs)

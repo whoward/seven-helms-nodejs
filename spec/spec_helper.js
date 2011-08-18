@@ -1,5 +1,8 @@
+// add the root directory to the load path
+require.paths.push("#{__dirname}/../");
+
 // this file is loaded automatically by jasmine-node, as is any file containing "helper" in it
-var couchdb = require("../lib/database").couchdb;
+var couchdb = require("lib/database").couchdb;
 
 TestHelper = {};
 

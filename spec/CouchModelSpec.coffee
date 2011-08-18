@@ -1,6 +1,6 @@
-CouchModel = require("../lib/couch_model").CouchModel
-ValidatableModel = require("../lib/validatable_model/model").ValidatableModel
-Model = require("../lib/model/model").Model
+CouchModel = require("lib/couch_model").CouchModel
+ValidatableModel = require("lib/validatable_model/model").ValidatableModel
+Model = require("lib/model/model").Model
 
 describe "Couch Model", ->
    User = null

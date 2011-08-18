@@ -1,10 +1,10 @@
-Class = require("../lib/class")
-Model = require("../lib/model/model").Model
+Class = require("lib/class")
+Model = require("lib/model/model").Model
 
-ValidatableModel = require("../lib/validatable_model/model").ValidatableModel
-FunctionValidator = require("../lib/validatable_model/function_validator").FunctionValidator
-PresenceValidator = require("../lib/validatable_model/presence_validator").PresenceValidator
-FormatValidator = require("../lib/validatable_model/format_validator").FormatValidator
+ValidatableModel = require("lib/validatable_model/model").ValidatableModel
+FunctionValidator = require("lib/validatable_model/function_validator").FunctionValidator
+PresenceValidator = require("lib/validatable_model/presence_validator").PresenceValidator
+FormatValidator = require("lib/validatable_model/format_validator").FormatValidator
 
 describe "Validatable model", ->
    MyModel = null

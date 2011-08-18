@@ -1,3 +1,6 @@
+# add the current directory to the load path
+require.paths.push __dirname
+
 # set up  some constants for use in the global scope
 global.App = 
    root: __dirname

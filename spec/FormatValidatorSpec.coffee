@@ -1,6 +1,6 @@
-FormatValidator = require("../lib/validatable_model/format_validator").FormatValidator
-Model = require("../lib/model/model").Model
-Class = require("../lib/class")
+FormatValidator = require("lib/validatable_model/format_validator").FormatValidator
+Model = require("lib/model/model").Model
+Class = require("lib/class")
 
 describe "format validator", ->
    model = null

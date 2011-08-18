@@ -1,4 +1,4 @@
-ModelDefinition = require('../lib/model/definition.coffee').ModelDefinition
+ModelDefinition = require('lib/model/definition.coffee').ModelDefinition
 
 describe 'ModelDefinition', ->
    def = null

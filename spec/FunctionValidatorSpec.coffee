@@ -1,4 +1,4 @@
-FunctionValidator = require("../lib/validatable_model/function_validator.coffee").FunctionValidator
+FunctionValidator = require("lib/validatable_model/function_validator.coffee").FunctionValidator
 
 describe "Function Validator", ->
 

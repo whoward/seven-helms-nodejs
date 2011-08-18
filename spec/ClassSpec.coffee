@@ -1,4 +1,4 @@
-Class = require '../lib/class.coffee'
+Class = require 'lib/class'
 
 describe 'Class', ->
    it "should provide access to the global object", ->

@@ -2,7 +2,7 @@ http   = require "http"
 path   = require "path"
 static = require "node-static"
 io     = require "socket.io"
-Client = require("./client.coffee").Client
+Client = require("./client").Client
 
 class Server
    constructor: ->

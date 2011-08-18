@@ -1,6 +1,6 @@
-PresenceValidator = require("../lib/validatable_model/presence_validator").PresenceValidator
-Model = require("../lib/model/model").Model
-Class = require("../lib/class")
+PresenceValidator = require("lib/validatable_model/presence_validator").PresenceValidator
+Model = require("lib/model/model").Model
+Class = require("lib/class")
 
 describe "presence validator", ->
    model = null

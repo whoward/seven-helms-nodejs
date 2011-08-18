@@ -54,7 +54,7 @@ guard 'shell' do
    watch(/lib\/(.+)/) { run_jasmine_suite }
 
    # watch for changes to the assets directories and regenerate the assets when that happens
-   watch(/assets\/(.+)/) do
+   watch(/^assets\/(.+)$/) do
       puts "regenerating assets"
       Rake::Task["compile:assets"].reenable
       Rake::Task["compile:assets"].invoke
@@ -63,7 +63,7 @@ guard 'shell' do
    end
 
    # watch for changes in the uncompiled game datafiles and regenerate the game package when that happens
-   watch(/game\/(.+)/) do
+   watch(/^data\/(.+)$/) do
       puts "regenerating game package"
 
       Rake::Task["compile:world"].reenable

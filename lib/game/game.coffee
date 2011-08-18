@@ -1,3 +1,3 @@
 
-exports.World = require("./world.coffee").World
-exports.Server = require("./server.coffee").Server
+exports.World = require("./world").World
+exports.Server = require("./server").Server

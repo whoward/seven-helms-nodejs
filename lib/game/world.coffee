@@ -1,7 +1,7 @@
 fs = require "fs"
 path = require "path"
 EventEmitter = require("events").EventEmitter
-Area = require("./area.coffee").Area
+Area = require("./area").Area
 
 world_file = path.join App.root, "game", "world.json"
 

@@ -1,6 +1,6 @@
-Class = require("../lib/class.coffee")
-Model = require("../lib/model/model.coffee").Model
-ModelDefinition = require("../lib/model/definition.coffee").ModelDefinition
+Class = require("lib/class.coffee")
+Model = require("lib/model/model.coffee").Model
+ModelDefinition = require("lib/model/definition.coffee").ModelDefinition
 
 describe "Model", ->
    MyModel = null

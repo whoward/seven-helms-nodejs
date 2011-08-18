@@ -2,6 +2,7 @@ application.js:
    - javascripts/lib/jquery-1.6.2.js
    - javascripts/lib/jquery.jscrollpane.min.js
    - javascripts/lib/jquery.mousewheel.js
+   - javascripts/lib/md5.js
 
    - javascripts/core_extensions.coffee
 

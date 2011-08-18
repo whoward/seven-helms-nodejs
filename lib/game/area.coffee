@@ -1,4 +1,4 @@
-World = require("./world.coffee").World
+World = require("./world").World
 
 class exports.Area
    constructor: (data) ->
