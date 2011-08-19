@@ -1,8 +1,5 @@
 World = require("./world").World
 User = require("db/user").User
-Digest = require("hashlib")
-
-UsernameRegex = /^[A-Za-z0-9\_\-]+$/
 
 class Client
    constructor: (connection, server) ->
@@ -10,7 +7,6 @@ class Client
       @server = server
 
       @area_id = ""
-
       @user = null
 
       # display the connection message (currently hardcoded, later will be customizable)
@@ -83,26 +79,23 @@ class Client
 
       When logged in the user will be set up in the initial area.  This is
       temporary as we will actually delegate this part to the game script later.
-
-      (for now no authentication is done)
    ###
    login: (params) ->
       unless params.username and params.password
          @connection.emit "error", "Please provide both a username and password"
          return
 
-      hashed_password = Digest.sha1(params.password + params.username)
+      if @server.user_list().indexOf(params.username) >= 0
+         @connection.emit "error", "That user account is already in use (maybe a bad thing?)"
+         return
 
-      userKey = "#{params.username}-#{hashed_password}"
-
-      console.log "user key is: ", userKey
-
-      User.view "credentials", {key: userKey}, (users) =>
-         if users.length is 0
+      User.find_for_credentials params.username, params.password, (user) =>
+         if not user
             @connection.emit "error", "Login error: no matching credentials for the username/password you provided"
          else
             @connection.emit "message", "You have successfully logged in, welcome!"
-            @user = users[0]
+            @server.broadcast "#{user.username} has logged on"
+            @user = user
             this.set_area(World.find("1-01"))
 
    ###
@@ -116,16 +109,11 @@ class Client
          @connection.emit "error", "Please provide both a username and password"
          return
 
-      user = new User
-         username: params.username
-         password: params.password
+      User.register params.username, params.password, (error, user) =>
+         return @connection.emit("error", error) if error
 
-      if not user.validate()
-         @connection.emit "error", "The parameters supplied are invalid"
-         return
-
-      user.save =>
          @connection.emit "message", "You have successfully registered! now logging you in."
+
          this.login(params)
       
    ###
@@ -147,12 +135,19 @@ class Client
       @connection.emit "message", "#{player.username} has left the area in the #{direction} direction"
 
    ###
-      This message send a message back to the client saying they must login,
+      This function sends a message back to the client saying they must login,
       usually called when the user isn't logged in and tries to do anything
       but login or register
    ###
    not_logged_in: ->
-      @connection.emit "message", "You are not logged in, please log in"
+      @connection.emit "error", "You are not logged in, please log in."
+
+   ###
+      Sends a message back saying the client is already logged in.  Usually used
+      when the user attempts 
+   ###
+   already_logged_in: ->
+      @connection.emit "error", "You are already logged in, please log out before attempting this."
 
    ###
       Processes a regular non-command message from the client, this will mean
@@ -174,6 +169,10 @@ class Client
       if not @user and command isnt "login" and command isnt "register"
          this.not_logged_in()
          return
+
+      if @user and (command is "login" or command is "register")
+         this.already_logged_in()
+         return
       
       switch command
          when "pm" then @server.pm this, params.username, params.message
@@ -187,7 +186,9 @@ class Client
       if current_area
          current_area.remove_player(this)
 
-      @server.broadcast "#{@username} has left the zone."
+      # if already logged in then broadcast a message saying they've disconnected
+      if @user
+         @server.broadcast "#{@user.username} has logged off."
 
       @server.removeClient(this)
 

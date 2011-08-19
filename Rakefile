@@ -2,10 +2,21 @@ require 'rubygems'
 require 'bundler'
 require 'yaml'
 require 'erb'
+require 'digest'
 
 require 'coffee_script'
 require 'sass'
 require 'json'
+
+desc "generates a new random salt (don't do this unless you really really mean it)"
+task :salt do
+   open("salt.js", "w+") do |file|
+      random_number = Kernel.rand(10000).to_s
+      salt = Digest::SHA1.hexdigest(random_number)
+
+      file << "exports.salt = '#{salt}';"
+   end
+end
 
 desc "compiles all static files"
 task :compile => ["compile:world", "compile:assets"]

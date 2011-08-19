@@ -22,22 +22,17 @@ class CouchModel
       id = this.get("_id")
 
       rev = this.get("_rev")
-
-      save_callback = (error, response) ->
-         throw error if error
-
-         callback.call(null, response)
       
       # figure out the best way to save to couchdb based on what values are available
       if rev isnt undefined and id isnt undefined
          # id is available and revision so this is a full update
-         couchdb.save(id, rev, values, save_callback)
+         couchdb.save(id, rev, values, callback)
       else if id isnt undefined
          # id is available but not revision, might be create or update (if ID is deterministic)
-         couchdb.save(id, values, save_callback)
+         couchdb.save(id, values, callback)
       else
          # no id or revision, so this is a create =)
-         couchdb.save(values, save_callback)
+         couchdb.save(values, callback)
 
       # validation was successful so return true
       true

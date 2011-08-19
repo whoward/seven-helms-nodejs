@@ -1,6 +1,9 @@
 # node modules are installed by npm
 node_modules
 
+# system password salt file
+salt.js
+
 # sass cache is definately not needed to be installed
 .sass-cache
 

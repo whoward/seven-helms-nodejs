@@ -1,7 +1,7 @@
 Digest = require("hashlib")
 CouchModel = require("../lib/couch_model").CouchModel
 
-exports.User = CouchModel.design "user",
+User = CouchModel.design "user",
    design_version: 5
 
    views:
@@ -39,7 +39,7 @@ exports.User = CouchModel.design "user",
          save: false
          dependents: ["username"]
          setter: (password) ->
-            @hashed_password = Digest.sha1(password + @username)
+            @hashed_password = Digest.sha1(password + @username + App.salt)
       }
    ]
 
@@ -50,3 +50,33 @@ exports.User = CouchModel.design "user",
 
       "hashed_password":
          presence: true
+
+
+User.find_for_credentials = (username, password, callback) ->
+   hashed_password = Digest.sha1(password + username + App.salt)
+
+   userKey = "#{username}-#{hashed_password}"
+
+   User.view "credentials", {key: userKey}, (users) =>
+      if users.length is 0
+         callback(null)
+      else
+         callback(users[0])
+
+User.register = (username, password, callback) ->
+   new_user = new User
+      username: username
+      password: password
+
+   if not new_user.validate()
+      callback("The parameters supplied are invalid")
+      return
+
+   # check to see if the user already exists
+   User.view "all", {key: username}, (users) =>
+      if users.length is 0
+         new_user.save(callback)
+      else
+         callback("The username '#{username}' is already taken")
+
+exports.User = User

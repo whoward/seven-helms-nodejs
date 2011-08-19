@@ -7,6 +7,7 @@ global.App =
    port: process.env.PORT || 3000
    environment: process.env.NODE_ENV || "development"
    design_documents: require("./db/design_documents.coffee").DesignDocuments
+   salt: require("salt").salt
 
 # load in some stuff
 EventManager = require("./lib/event_manager").EventManager
