@@ -3,3 +3,5 @@ jQuery(document).ready ->
    window.input_handler = new KeyboardInputHandler()
    window.connection = new Connection()
    window.input_parser = new InputParser()
+   window.login_dialog = new LoginDialog("body")
+   window.registration_dialog = new RegistrationDialog("body")

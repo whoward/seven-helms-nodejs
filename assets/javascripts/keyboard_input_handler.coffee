@@ -2,6 +2,8 @@
 class window.KeyboardInputHandler
    constructor: ->
       jQuery(document).bind "keydown", (e) =>
+         return if jQuery(e.target).is(":input")
+
          if e.keyCode is 8 or e.which is 8
             game_screen.backspace()
             return false         
@@ -9,6 +11,8 @@ class window.KeyboardInputHandler
          return true
 
       jQuery(document).bind "keypress", (e) =>
+         return if jQuery(e.target).is(":input")
+
          char = String.fromCharCode(e.charCode)
 
          # check if the given character is a non printable character

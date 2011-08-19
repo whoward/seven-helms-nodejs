@@ -23,7 +23,9 @@ class Server
          @clients.push new Client(connection, this)
 
    broadcast: (message) ->
-      @socket_server.sockets.emit("message", message)
+      @socket_server.sockets.emit "message", 
+         type: "Broadcast"
+         message: message
 
    user_list: ->
       result = []
@@ -51,7 +53,9 @@ class Server
       if recipient
          recipient.connection.emit "pm", sender.username, message
       else
-         sender.connection.emit "error", "No logged in user found named '#{recipient_name}'"
+         sender.connection.emit "error", 
+            type: "PrivateMessageError", 
+            message: "No logged in user found named '#{recipient_name}'"
 
    removeClient: (client) ->
       index = @clients.indexOf(client)

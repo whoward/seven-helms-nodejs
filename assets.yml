@@ -3,6 +3,7 @@ application.js:
    - javascripts/lib/jquery.jscrollpane.min.js
    - javascripts/lib/jquery.mousewheel.js
    - javascripts/lib/md5.js
+   - javascripts/lib/jqmodal.r14.js
 
    - javascripts/core_extensions.coffee
 
@@ -11,8 +12,12 @@ application.js:
    - javascripts/keyboard_input_handler.coffee
    - javascripts/input_parser.coffee
 
+   - javascripts/login_dialog.coffee
+   - javascripts/registration_dialog.coffee
+
    - javascripts/application.coffee
 
 application.css:
    - stylesheets/application.sass
    - stylesheets/jquery.jscrollpane.sass
+   - stylesheets/jqmodal.r14.css

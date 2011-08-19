@@ -1,5 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Lekton:400,700)
 
+@import "macros"
+
 body
   padding: 10px
   margin: 0
@@ -28,6 +30,34 @@ body
 #console
   padding: 5px 0px
   white-space: pre-wrap
+
+#login, #register
+  position: fixed
+  top: 0
+  left: 0
+  
+  display: none
+
+  padding: 10px
+  
+  background-color: white
+  color: black
+
+  @include border-radius
+
+  label
+    display: block
+  
+  input
+    display: block
+
+  button
+    float: right
+
+  a, a:hover
+    color: blue
+    padding-top: 5px
+    display: block
 
 .area-header
   color: #ffc90e
