@@ -14,6 +14,7 @@ The server and client are written mostly in CoffeeScript, since I generally like
 4. Install Node Packages: ``` npm install . ```
 5. Install Ruby-based build tools: ``` apt-get install rubygems; gem install bundler; bundle install ```
 6. Compile everything: ``` rake compile ```
+7. Generate a salt file: ``` rake salt ```
 
 # How to run
 
