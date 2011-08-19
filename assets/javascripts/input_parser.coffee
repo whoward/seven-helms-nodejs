@@ -12,14 +12,6 @@ class window.InputParser
 
    processCommand: (command, text) ->
       switch command
-         when "login"
-            [username, password] = text.split(/\s+/g)
-            connection.login(username, password)
-
-         when "register"
-            [username, password] = text.split(/\s+/g)
-            connection.register(username, password)
-
          when "say"
             [username, message] = (/^([A-Za-z0-9\_\-]+)\s+(.+)/.exec(text) || ["", "", ""])[1..]
             if username and message
@@ -37,7 +29,7 @@ class window.InputParser
          else this.unknownCommand "Sorry, I don't understand the command \"#{command}\""
 
    printHelp: ->
-      game_screen.coloredMessage "golden-yellow", "commands: /login /register /say /help /list /go"
+      game_screen.coloredMessage "golden-yellow", "commands: /say /help /list /go"
 
    unknownCommand: (message) ->
       game_screen.coloredMessage "purple", message
