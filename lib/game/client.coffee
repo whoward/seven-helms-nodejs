@@ -1,5 +1,5 @@
 World = require("./world").World
-User = require("db/user").User
+User = require("../../db/user").User
 
 class Client
    constructor: (connection, server) ->

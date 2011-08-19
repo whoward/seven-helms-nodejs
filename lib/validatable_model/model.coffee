@@ -1,5 +1,5 @@
-Class = require("lib/class")
-Model = require("lib/model/model").Model
+Class = require("../class")
+Model = require("../model/model").Model
 
 FunctionValidator = require("./function_validator").FunctionValidator
 PresenceValidator = require("./presence_validator").PresenceValidator

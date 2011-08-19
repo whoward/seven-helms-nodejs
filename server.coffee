@@ -1,13 +1,10 @@
-# add the current directory to the load path
-require.paths.push __dirname
-
 # set up  some constants for use in the global scope
 global.App = 
    root: __dirname
    port: process.env.PORT || 3000
    environment: process.env.NODE_ENV || "development"
    design_documents: require("./db/design_documents.coffee").DesignDocuments
-   salt: require("salt").salt
+   salt: require("./salt").salt
 
 # load in some stuff
 EventManager = require("./lib/event_manager").EventManager
