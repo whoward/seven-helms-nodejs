@@ -9,11 +9,11 @@ class window.Connection
       @socket.on "message", (message) =>
          this.processMessage(message.type, message.message)
 
-      @socket.on "pm", (sender, message) ->
-         game_screen.privateMessageReceived sender, message
+      @socket.on "pm", (message) ->
+         game_screen.privateMessageReceived message.sender, message.message
 
-      @socket.on "list", (playerList) ->
-         game_screen.coloredMessage "blue", "Users: #{playerList.join(", ")}"
+      @socket.on "list", (data) ->
+         game_screen.coloredMessage "blue", "Users: #{data.users.join(", ")}"
 
       @socket.on "area", (areaData) ->
          game_screen.displayArea(areaData)

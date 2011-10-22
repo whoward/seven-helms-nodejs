@@ -42,3 +42,4 @@ startup_manager.complete ->
 
 # and commence the whole process
 couchdb.initialize()
+game.World.initialize()

@@ -3,6 +3,7 @@ path   = require "path"
 static = require "node-static"
 io     = require "socket.io"
 Client = require("./client").Client
+Connection = require("./connection").Connection
 
 class Server
    constructor: ->
@@ -19,8 +20,8 @@ class Server
 
       @socket_server = io.listen(@http_server)
 
-      @socket_server.sockets.on "connection", (connection) =>
-         @clients.push new Client(connection, this)
+      @socket_server.sockets.on "connection", (socket) =>
+         @clients.push new Client(new Connection(socket), this)
 
    broadcast: (message) ->
       @socket_server.sockets.emit "message", 
@@ -51,11 +52,9 @@ class Server
             break
 
       if recipient
-         recipient.connection.emit "pm", sender.username, message
+         recipient.connection.private_message sender.username, message
       else
-         sender.connection.emit "error", 
-            type: "PrivateMessageError", 
-            message: "No logged in user found named '#{recipient_name}'"
+         sender.connection.error "PrivateMessageError", "No logged in user found named '#{recipient_name}'"
 
    removeClient: (client) ->
       index = @clients.indexOf(client)

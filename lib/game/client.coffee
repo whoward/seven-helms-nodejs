@@ -10,9 +10,7 @@ class Client
       @user = null
 
       # display the connection message (currently hardcoded, later will be customizable)
-      @connection.emit "message", 
-         type: "LoginRequired"
-         message: "Welcome to Seven Helms, please log in or register a new account."
+      @connection.message "LoginRequired", "Welcome to Seven Helms, please log in or register a new account."
 
       # handle basic messages from the client
       @connection.on "message", (message) =>
@@ -33,44 +31,34 @@ class Client
          else
             return null
 
-   ###
-      Retrieves the area the player is currently placed in
-   ###
-   get_area: ->
-      World.find(@area_id)
+      this.__defineGetter__ "area", ->
+         World.find(@area_id)
 
-   ###
-      Moves the player from the current area to the given area, removing 
-      references to them as necessary.  Also sends the next area's information
-      to the player.
-   ###
-   set_area: (next_area) ->
-      current_area = this.get_area()
+      this.__defineSetter__ "area", (next_area) ->
+         current_area = this.area
 
-      @area_id = next_area.id
+         @area_id = next_area.id
 
-      if current_area
-         current_area.remove_player(this)
+         if current_area
+            current_area.remove_player(this)
 
-      next_area.add_player(this)
+         next_area.add_player(this)
 
-      @connection.emit "area", next_area.to_json()
+         @connection.send_area(next_area)
 
    ###
       Moves the player in the given direction name.  If the direction is not
       defined then an error message will be displayed to the player.
    ###
    move: (direction) ->
-      current_area = this.get_area()
+      current_area = this.area
       next_area = current_area.area_for_direction(direction)
 
       if not next_area
-         @connection.emit "error", 
-            type: "UndefinedDirection"
-            message: "You cannot go in that direction"
+         @connection.error "UndefinedDirection", "You cannot go in that direction"
          return
 
-      this.set_area(next_area)
+      this.area = next_area
 
       if current_area
          current_area.notify_exit(this, direction)
@@ -86,32 +74,24 @@ class Client
    ###
    login: (params) ->
       unless params.username and params.password
-         @connection.emit "error"
-            type: "LoginFailure"
-            message: "Please provide both a username and password"
+         @connection.error "LoginFailure", "Please provide both a username and password"
          return
 
       if @server.user_list().indexOf(params.username) >= 0
-         @connection.emit "error", 
-            type: "LoginFailure"
-            message: "That user account is already in use (maybe a bad thing?)"
+         @connection.error "LoginFailure", "That user account is already in use (maybe a bad thing?)"
          return
 
       User.find_for_credentials params.username, params.password, (user) =>
          if not user
-            @connection.emit "error", 
-               type: "LoginFailure"
-               message: "Login error: no matching credentials for the username/password you provided"
+            @connection.error "LoginFailure", "Login error: no matching credentials for the username/password you provided"
          else
-            @connection.emit "message"
-               type: "LoginSuccess"
-               message: "You have successfully logged in, welcome!"
+            @connection.message "LoginSuccess", "You have successfully logged in, welcome!"
             
             @server.broadcast "#{user.username} has logged on"
 
             @user = user
 
-            this.set_area(World.find("1-01"))
+            this.area = World.find("1-01")
 
    ###
       Registers the given user so long as the given parameters are valid.  If
@@ -121,21 +101,15 @@ class Client
    ###
    register: (params) ->
       unless params.username and params.password
-         @connection.emit "error", 
-            type: "RegistrationFailure"
-            message: "Please provide both a username and password"
+         @connection.error "RegistrationFailure", "Please provide both a username and password"
          return
 
       User.register params.username, params.password, (error, user) =>
          if error
-            @connection.emit "error",
-               type: "RegistrationFailure"
-               message: error
+            @connection.error "RegistrationFailure", error
             return
 
-         @connection.emit "message", 
-            type: "RegistrationSuccess"
-            message: "You have successfully registered! now logging you in."
+         @connection.message "RegistrationSuccess", "You have successfully registered! now logging you in."
 
          this.login(params)
       
@@ -146,22 +120,16 @@ class Client
    ###
    notify_entrance: (player, direction) ->
       if direction
-         @connection.emit "message", 
-            type: "Notification"
-            message: "#{player.username} has arrived from the #{direction} direction"
+         @connection.message "PlayerEntrance", "#{player.username} has arrived from the #{direction} direction"
       else
-         @connection.emit "message",
-            type: "Notification"
-            message: "#{player.username} has entered the area"
+         @connection.message "PlayerEntrance", "#{player.username} has entered the area"
    
    ###
       This sends a message to the player letting them know a player has left the
       current area in the given direction
    ###
    notify_exit: (player, direction) ->
-      @connection.emit "message", 
-         type: "Notification"
-         message: "#{player.username} has left the area in the #{direction} direction"
+      @connection.message "PlayerExit", "#{player.username} has left the area in the #{direction} direction"
 
    ###
       This function sends a message back to the client saying they must login,
@@ -169,18 +137,14 @@ class Client
       but login or register
    ###
    not_logged_in: ->
-      @connection.emit "error", 
-         type: "LoginRequired"
-         message: "You are not logged in, please log in."
+      @connection.error "LoginRequired", "You are not logged in, please log in."
 
    ###
       Sends a message back saying the client is already logged in.  Usually used
       when the user attempts 
    ###
    already_logged_in: ->
-      @connection.emit "error", 
-         type: "LogoutRequired"
-         message: "You are already logged in, please log out before attempting this."
+      @connection.error "LogoutRequired", "You are already logged in, please log out before attempting this."
 
    ###
       Processes a regular non-command message from the client, this will mean
@@ -209,13 +173,13 @@ class Client
       
       switch command
          when "pm" then @server.pm this, params.username, params.message
-         when "list" then @connection.emit "list", @server.user_list()
+         when "list" then @connection.user_list(@server.user_list())
          when "go" then this.move params.direction
          when "login" then this.login(params)
          when "register" then this.register(params)
 
    process_disconnect: ->
-      current_area = this.get_area()
+      current_area = this.area
       if current_area
          current_area.remove_player(this)
 
