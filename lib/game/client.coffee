@@ -155,7 +155,7 @@ class Client
       if not @user
          this.not_logged_in()
       else
-         @server.broadcast "#{@username}: #{message}"
+         @server.broadcast_from_user @username, message
 
    ###
       Processes a command message from the client, based on the command parameter
@@ -173,6 +173,7 @@ class Client
       
       switch command
          when "pm" then @server.pm this, params.username, params.message
+         when "talk" then @server.broadcast_from_user @username, params.message
          when "list" then @connection.user_list(@server.user_list())
          when "go" then this.move params.direction
          when "login" then this.login(params)

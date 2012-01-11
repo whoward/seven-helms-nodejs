@@ -28,6 +28,11 @@ class Server
          type: "Broadcast"
          message: message
 
+   broadcast_from_user: (sender, message) ->
+      @socket_server.sockets.emit "talk",
+         sender: sender,
+         message: message
+
    user_list: ->
       result = []
 

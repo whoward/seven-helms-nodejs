@@ -8,7 +8,7 @@ class window.InputParser
       else if message is "/"
          game_screen.unknownCommand "Sorry, I don't understand what kind of command you're trying to do"
       else
-         connection.message(message)
+         connection.talk(message)
 
    processCommand: (command, text) ->
       switch command

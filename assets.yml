@@ -1,5 +1,5 @@
 application.js:
-   - javascripts/lib/jquery-1.6.2.js
+   - javascripts/lib/jquery-1.7.1.js
    - javascripts/lib/jquery.jscrollpane.min.js
    - javascripts/lib/jquery.mousewheel.js
    - javascripts/lib/md5.js

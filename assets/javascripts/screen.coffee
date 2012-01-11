@@ -38,7 +38,7 @@ class window.GameScreen
       @input.html "> #{@input_text}_"
 
    appendMessage: (message) ->
-      @messages.append "<li>#{message.h()}</li>"
+      jQuery("<li/>").html(message.h()).appendTo(@messages);
 
    appendInput: (chars) ->
       this.setInputText @input_text + chars
@@ -47,11 +47,20 @@ class window.GameScreen
       input_parser.process_input(@input_text)      
       this.clearInput()
 
-   privateMessageReceived: (sender, message) ->
-      this.appendMessage "<span class='pm'>From (<a href='#'>#{sender}</a>): #{message}</span>".safe()
+   talkMessageReceived: (sender, message) ->
+      if sender == connection.username
+         message = this.coloredMessage "blue", "<span class='talk'>#{sender}: #{message}</span>".safe()
+      else
+         message = this.appendMessage "<span class='talk'><a href='#'>#{sender}</a>: #{message}</span>".safe()
       
-      @messages.children("li:last a").click =>
-         console.log "clicked pm link"
+      message.find("a").click =>
+         this.setInputText "/say #{sender}"
+         false
+
+   privateMessageReceived: (sender, message) ->
+      message = this.appendMessage "<span class='pm'>From (<a href='#'>#{sender}</a>): #{message}</span>".safe()
+
+      message.find("a").click =>
          this.setInputText "/say #{sender} "
          false
 

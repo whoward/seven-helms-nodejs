@@ -9,6 +9,9 @@ class window.Connection
       @socket.on "message", (message) =>
          this.processMessage(message.type, message.message)
 
+      @socket.on "talk", (message) ->
+         game_screen.talkMessageReceived message.sender, message.message
+
       @socket.on "pm", (message) ->
          game_screen.privateMessageReceived message.sender, message.message
 
@@ -25,11 +28,13 @@ class window.Connection
          game_screen.coloredMessage "red", "Disconnected from the server."
 
    login: (name, password) ->
+      @username = name
       this.command "login"
          username: name
          password: md5(password)
 
    register: (name, password) ->
+      @username = name
       this.command "register"
          username: name
          password: md5(password)
@@ -37,6 +42,10 @@ class window.Connection
    pm: (name, msg) ->
       this.command "pm"
          username: name
+         message: msg
+
+   talk: (msg) ->
+      this.command "talk"
          message: msg
 
    list: ->
@@ -55,6 +64,7 @@ class window.Connection
    processMessage: (type, message) ->
       switch type
          when "LoginRequired"
+            @username = null
             game_screen.appendMessage(message)
             login_dialog.show()
 
