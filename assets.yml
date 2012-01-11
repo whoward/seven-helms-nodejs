@@ -7,7 +7,9 @@ application.js:
 
    - javascripts/core_extensions.coffee
 
-   - javascripts/screen.coffee
+   - javascripts/screen_message_queue.coffee
+   - javascripts/screen_input.coffee
+   - javascripts/game_screen.coffee
    - javascripts/connection.coffee
    - javascripts/keyboard_input_handler.coffee
    - javascripts/input_parser.coffee

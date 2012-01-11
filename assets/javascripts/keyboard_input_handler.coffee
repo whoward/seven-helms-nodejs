@@ -5,7 +5,7 @@ class window.KeyboardInputHandler
          return if jQuery(e.target).is(":input")
 
          if e.keyCode is 8 or e.which is 8
-            game_screen.backspace()
+            game_screen.input.backspace()
             return false         
 
          return true
@@ -17,18 +17,18 @@ class window.KeyboardInputHandler
 
          # check if the given character is a non printable character
          if /[\x00-\x1F]/.test(char)
-            return this.commandKey(e.keyCode || e.which)
+            return this.command_key(e.keyCode || e.which)
          else
-            return this.textKey(char)
+            return this.text_key(char)
 
 
-   commandKey: (keyCode) ->
+   command_key: (keyCode) ->
       switch keyCode
          # enter key
-         when 13 then game_screen.submitInput()
+         when 13 then game_screen.submit_input()
 
          # backspace key
-         when 8 then game_screen.backspace()
+         when 8 then game_screen.input.backspace()
 
          # meta keys
          when 91, 92, 93
@@ -46,6 +46,6 @@ class window.KeyboardInputHandler
       
       return false
 
-   textKey: (char) ->
-      game_screen.appendInput(char)
+   text_key: (char) ->
+      game_screen.input.append(char)
       return false

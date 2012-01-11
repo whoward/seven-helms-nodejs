@@ -4,28 +4,28 @@ class window.Connection
       @socket = io.connect()
 
       @socket.on "connect", ->
-         game_screen.coloredMessage "red", "Connected to the server."
+         game_screen.connected
 
       @socket.on "message", (message) =>
-         this.processMessage(message.type, message.message)
+         this.message_received(message.type, message.message)
 
       @socket.on "talk", (message) ->
-         game_screen.talkMessageReceived message.sender, message.message
+         game_screen.user_broadcast message.sender, message.message
 
       @socket.on "pm", (message) ->
-         game_screen.privateMessageReceived message.sender, message.message
+         game_screen.private_message_received message.sender, message.message
 
       @socket.on "list", (data) ->
-         game_screen.coloredMessage "blue", "Users: #{data.users.join(", ")}"
+         game_screen.user_list(data.users)
 
       @socket.on "area", (areaData) ->
-         game_screen.displayArea(areaData)
+         game_screen.area(areaData)
 
       @socket.on "error", (error) =>
-         this.processError(error.type, error.message)
+         this.error_received(error.type, error.message)
 
       @socket.on "disconnect", ->
-         game_screen.coloredMessage "red", "Disconnected from the server."
+         game_screen.disconnect
 
    login: (name, password) ->
       @username = name
@@ -61,27 +61,27 @@ class window.Connection
    command: (command, params) ->
       @socket.emit "command", command, params
 
-   processMessage: (type, message) ->
+   message_received: (type, message) ->
       switch type
          when "LoginRequired"
             @username = null
-            game_screen.appendMessage(message)
+            game_screen.message(message)
             login_dialog.show()
 
          when "LoginSuccess"
-            game_screen.appendMessage(message)
+            game_screen.message(message)
             login_dialog.hide()
 
          when "RegistrationSuccess"
-            game_screen.appendMessage(message)
+            game_screen.message(message)
             registration_dialog.hide()
 
          else
-            game_screen.appendMessage(message)
+            game_screen.message(message)
 
-   processError: (type, message) ->
+   error_received: (type, message) ->
       switch type
          when "LoginFailure" then alert(message)
          when "RegistrationFailure" then alert(message)
          else
-            game_screen.coloredMessage "purple", message
+            game_screen.error message
