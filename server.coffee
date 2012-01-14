@@ -1,3 +1,5 @@
+require "sugar"
+
 # set up  some constants for use in the global scope
 global.App = 
    root: __dirname
@@ -6,12 +8,19 @@ global.App =
    design_documents: require("./db/design_documents.coffee").DesignDocuments
    salt: require("./salt").salt
 
+   strings:
+      welcome_message: "Welcome to Seven Helms, please log in or register a new account."
+
 # load in some stuff
 EventManager = require("./lib/event_manager").EventManager
 glob = require("glob")
 
 # load in our core extensions
-#require("./assets/javascripts/core_extensions.coffee")
+require("./assets/javascripts/core_extensions.coffee")
+
+# load in the framework classes
+glob.globSync("framework/*.{coffee,js}").forEach (file) ->
+   require("./#{file}")
 
 # load up all of the models under the "db" directory, they'll in turn register
 # themselves as models and create appropriate design documents
@@ -19,8 +28,8 @@ glob.globSync("db/*.{coffee,js}").forEach (file) ->
    require("./#{file}")
 
 # load in systems used in this server
-game         = require("./lib/game")
-couchdb      = require("./lib/database.coffee").couchdb
+game    = require("./lib/game")
+couchdb = require("./lib/database.coffee").couchdb
 
 # log the current environment
 console.log "starting up in #{App.environment} mode"

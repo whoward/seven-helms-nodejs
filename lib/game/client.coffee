@@ -1,16 +1,15 @@
 World = require("./world").World
 User = require("../../db/user").User
 
-class Client
+class exports.Client extends BasicObject
    constructor: (connection, server) ->
+      Kernel.construct_mixins(this)
+
       @connection = connection
       @server = server
 
       @area_id = ""
       @user = null
-
-      # display the connection message (currently hardcoded, later will be customizable)
-      @connection.message "LoginRequired", "Welcome to Seven Helms, please log in or register a new account."
 
       # handle basic messages from the client
       @connection.on "message", (message) =>
@@ -24,34 +23,45 @@ class Client
       @connection.on "disconnect", =>
          this.process_disconnect()
 
-      # since its used so often define a getter for the username
-      this.__defineGetter__ "username", ->
-         if @user and @user.username
-            return @user.username
-         else
-            return null
+   @get "username", ->
+      if @user and @user.username
+         return @user.username
+      else
+         return null
+   
+   @get "area", ->
+      World.find(@area_id)
 
-      this.__defineGetter__ "area", ->
-         World.find(@area_id)
+   @set "area", (next_area) ->
+      current_area = this.area
 
-      this.__defineSetter__ "area", (next_area) ->
-         current_area = this.area
+      @area_id = next_area.id
 
-         @area_id = next_area.id
+      if current_area
+         current_area.remove_player(this)
 
-         if current_area
-            current_area.remove_player(this)
+      next_area.add_player(this)
 
-         next_area.add_player(this)
+      @connection.send_area(next_area)
 
-         @connection.send_area(next_area)
+   @get "instance", ->
+      @_instance
+   
+   @set "instance", (instance) ->
+      if @_instance
+         @_instance.remove_player(this)
+
+      @_instance = instance
+
+      @_instance.add_player(this)
+
 
    ###
       Moves the player in the given direction name.  If the direction is not
       defined then an error message will be displayed to the player.
    ###
    move: (direction) ->
-      current_area = this.area
+      current_area = @area
       next_area = current_area.area_for_direction(direction)
 
       if not next_area
@@ -132,6 +142,12 @@ class Client
       @connection.message "PlayerExit", "#{player.username} has left the area in the #{direction} direction"
 
    ###
+      This sends a message to the player letting them know they need to log in
+   ###
+   notify_login_required: ->
+      @connection.message "LoginRequired", App.strings.welcome_message
+
+   ###
       This function sends a message back to the client saying they must login,
       usually called when the user isn't logged in and tries to do anything
       but login or register
@@ -188,9 +204,6 @@ class Client
       if @user
          @server.broadcast "#{@user.username} has logged off."
 
-      @server.removeClient(this)
+      this.notify_observers("client_disconnected")
 
-
-
-
-exports.Client = Client
+Kernel.mixin(exports.Client, Observable)
