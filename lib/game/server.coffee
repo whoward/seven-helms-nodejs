@@ -2,6 +2,7 @@ http   = require "http"
 path   = require "path"
 static = require "node-static"
 io     = require "socket.io"
+
 Client = require("./client").Client
 Connection = require("./connection").Connection
 Instance = require("./instance").Instance
@@ -9,6 +10,7 @@ Instance = require("./instance").Instance
 class exports.Server
    constructor: (port) ->
       @port = port || App.port
+
       @clients = []
       @instances = []
 
@@ -43,6 +45,7 @@ class exports.Server
 
    create_client: (connection) ->
       client = new Client(connection, this)
+      
       client.instance = @lobby_instance
       
       client.add_observer(this)
@@ -63,9 +66,8 @@ class exports.Server
       # do nothing
 
    broadcast: (message) ->
-      @socket_server.sockets.emit "message", 
-         type: "Broadcast"
-         message: message
+      @instances.each (instance) ->
+         instance.broadcast(message)
 
    broadcast_from_user: (sender, message) ->
       @socket_server.sockets.emit "talk",

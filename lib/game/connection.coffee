@@ -3,6 +3,11 @@ class Connection
    constructor: (socket) ->
       @socket = socket
 
+   broadcast: (message) ->
+      @socket.emit "message", 
+         type: "Broadcast"
+         message: message
+
    message: (type, message) ->
       @socket.emit "message",
          type: type

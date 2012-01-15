@@ -122,6 +122,9 @@ class exports.Client extends BasicObject
          @connection.message "RegistrationSuccess", "You have successfully registered! now logging you in."
 
          this.login(params)
+
+   deliver_broadcast: (message) ->
+      @connection.broadcast(message)
       
    ###
       This send a message to the player letting them know a player has entered 
